@@ -169,10 +169,20 @@
   .r-list a.pat { text-decoration: none; color: var(--ink); }
   .r-list a.pat:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
   .pno { display: block; font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin-top: 3px; }
-  .honors { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .honors { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
   .honor { border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; font-size: 15px; color: var(--ink-2); background: var(--bg); }
   .honor b { display: block; color: var(--ink); font-weight: 600; margin-bottom: 2px; }
   .scholar-row { margin-top: 20px; }
+  .featured { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .feat { border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; background: var(--bg); display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden; }
+  .feat::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(var(--accent), var(--accent-2)); }
+  .feat b { font-size: 19px; letter-spacing: -.01em; }
+  .feat p { margin: 0; color: var(--ink-2); font-size: 15px; }
+  .book { display: block; margin-top: 6px; padding: 12px 14px; border-radius: 10px; background: var(--card); border: 1px solid var(--line); text-decoration: none; transition: border-color .15s; }
+  .book:hover { border-color: var(--accent); }
+  .book i { display: block; color: var(--ink); font-size: 15px; }
+  .book span { display: block; font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin-top: 4px; }
+  @media (max-width: 900px) { .featured { grid-template-columns: 1fr; } }
 
   /* Project cards */
   .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
@@ -413,7 +423,7 @@
               <ul>
                 <li>High-voltage resonant DC-DC converters and high-voltage modulators</li>
                 <li>Analog control hardware</li>
-                <li>DRDO Technology Group Award from the Scientific Advisor to the Defence Minister for a more efficient, higher-power-density HV DC-DC converter</li>
+                <li>DRDO Technology Group Award from the Scientific Advisor, Ministry of Defence, for a more efficient, higher-power-density HV DC-DC converter</li>
                 <li>Mentored two bachelor's students and guided one master's student</li>
               </ul>
             </li>
@@ -456,10 +466,24 @@
         </div>
         <div class="r-card wide reveal">
           <h3>Honours &amp; awards</h3>
+          <div class="featured">
+            <div class="feat">
+              <span class="tag">2017 · Springer Nature</span>
+              <b>Springer Theses Award</b>
+              <p>Springer Theses recognises outstanding PhD research from around the world. Theses enter the series by nomination only, and each one chosen is published as a book. My NUS thesis was selected and published by Springer in 2018.</p>
+              <a class="book" href="https://doi.org/10.1007/978-981-10-8213-9" target="_blank" rel="noopener">
+                <i>Analysis and Design of Power Converter Topologies for Application in Future More Electric Aircraft</i>
+                <span>Springer Singapore, 2018 · ISBN 978-981-10-8213-9 →</span>
+              </a>
+            </div>
+            <div class="feat">
+              <span class="tag">DRDO · Ministry of Defence, India</span>
+              <b>DRDO Technology Group Award</b>
+              <p>Presented by the Scientific Advisor, Ministry of Defence, India, for designing a new high-voltage DC-DC converter with higher efficiency and higher power density, for the power electronics of microwave transmitters.</p>
+            </div>
+          </div>
           <div class="honors">
-            <div class="honor"><b>Springer Theses Award</b>2017, outstanding PhD research</div>
             <div class="honor"><b>Best Session Presentation Award</b>IEEE IECON 2016, the 42nd Annual Conference of the IEEE Industrial Electronics Society, Florence, Italy</div>
-            <div class="honor"><b>DRDO Technology Group Award</b>Ministry of Defence, India</div>
             <div class="honor"><b>3rd prize, oral presentation</b>Graduate Student Symposium 2014, ECE, NUS</div>
             <div class="honor"><b>IEEE-HKN member</b>NUS Eta Kappa Nu honour society</div>
             <div class="honor"><b>NUS Research Scholarship</b>PhD funding</div>

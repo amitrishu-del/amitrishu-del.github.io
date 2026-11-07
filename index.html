@@ -7,12 +7,26 @@
 <meta name="description" content="Amit Singh, PhD — RF power electronics engineer working on plasma sources for semiconductor etch. Career, research, software, games and photography.">
 <meta property="og:title" content="Amit Singh, PhD">
 <meta property="og:description" content="RF power electronics · Plasma · Simulation-driven design. Career, research, software, games and photography.">
-<meta property="og:image" content="assets/portrait.jpg">
-<link rel="icon" href="assets/portrait.jpg">
+<link rel="canonical" href="https://amitrishu-del.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://amitrishu-del.github.io/">
+<meta property="og:site_name" content="Amit Singh, PhD">
+<meta property="og:image" content="https://amitrishu-del.github.io/assets/share-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Amit Singh, PhD. Senior Member of Technical Staff, RF Engineering at Lam Research">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://amitrishu-del.github.io/assets/share-card.png">
+<meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d0f14" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
 <script>
+  document.documentElement.classList.add('js');
   // Apply saved theme before paint (auto / light / dark)
   try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
 </script>
@@ -23,13 +37,15 @@
     --card: #ffffff;
     --ink: #16181d;
     --ink-2: #4a4f5a;
-    --ink-3: #80858f;
+    --ink-3: #676c76;
     --line: #e1ded5;
     --accent: #d9481e;      /* plasma orange */
     --accent-2: #6b4ce6;    /* RF violet */
     --accent-soft: rgba(217, 72, 30, .09);
-    --wave-1: rgba(217, 72, 30, .55);
-    --wave-2: rgba(107, 76, 230, .45);
+    --accent-ink: #bd3b12;  /* darker orange for small text */
+    --wave-1: rgba(217, 72, 30, .75);
+    --wave-2: rgba(107, 76, 230, .5);
+    --grid: rgba(20, 20, 30, .07);
     --shadow: 0 1px 2px rgba(20,20,30,.04), 0 8px 28px rgba(20,20,30,.06);
     --radius: 18px;
     --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -38,15 +54,15 @@
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #0d0f14; --bg-alt: #12151c; --card: #171a22; --ink: #eef0f4; --ink-2: #b2b7c2; --ink-3: #7c828f;
-      --line: #262a35; --accent: #ff7a45; --accent-2: #9a82ff; --accent-soft: rgba(255,122,69,.12);
-      --wave-1: rgba(255,122,69,.6); --wave-2: rgba(154,130,255,.5);
+      --line: #262a35; --accent: #ff7a45; --accent-2: #9a82ff; --accent-soft: rgba(255,122,69,.12); --accent-ink: #ff7a45;
+      --wave-1: rgba(255,122,69,.85); --wave-2: rgba(154,130,255,.55); --grid: rgba(255,255,255,.06);
       --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35); color-scheme: dark;
     }
   }
   :root[data-theme="dark"] {
     --bg: #0d0f14; --bg-alt: #12151c; --card: #171a22; --ink: #eef0f4; --ink-2: #b2b7c2; --ink-3: #7c828f;
-    --line: #262a35; --accent: #ff7a45; --accent-2: #9a82ff; --accent-soft: rgba(255,122,69,.12);
-    --wave-1: rgba(255,122,69,.6); --wave-2: rgba(154,130,255,.5);
+    --line: #262a35; --accent: #ff7a45; --accent-2: #9a82ff; --accent-soft: rgba(255,122,69,.12); --accent-ink: #ff7a45;
+    --wave-1: rgba(255,122,69,.85); --wave-2: rgba(154,130,255,.55); --grid: rgba(255,255,255,.06);
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35); color-scheme: dark;
   }
 
@@ -84,13 +100,18 @@
   }
   .theme-btn:hover { color: var(--ink); }
   .theme-btn svg { width: 17px; height: 17px; }
+  .menu-btn { display: none; }
+  .menu-btn path { transition: transform .2s, opacity .2s; transform-origin: 12px 12px; }
+  .nav.open .menu-btn .m1 { transform: translateY(5px) rotate(45deg); }
+  .nav.open .menu-btn .m2 { opacity: 0; }
+  .nav.open .menu-btn .m3 { transform: translateY(-5px) rotate(-45deg); }
 
   /* ---------- Hero ---------- */
-  .hero { position: relative; overflow: hidden; padding: 72px 0 64px; }
+  .hero { position: relative; overflow: hidden; padding: 72px 0 28px; }
   #wave { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .9; }
   .hero .wrap { position: relative; display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center; }
   .eyebrow {
-    font-family: var(--mono); font-size: 13px; color: var(--accent); letter-spacing: .02em;
+    font-family: var(--mono); font-size: 13px; color: var(--accent-ink); letter-spacing: .02em;
     display: inline-flex; align-items: center; gap: 8px;
   }
   .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
@@ -110,19 +131,23 @@
     border: 6px solid var(--card); box-shadow: var(--shadow), 0 0 0 1px var(--line);
   }
 
-  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-top: 88px; position: relative; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-top: 104px; position: relative; }
   .stat { background: var(--card); padding: 20px 22px; }
   .stat b { display: block; font-size: 28px; letter-spacing: -.02em; font-weight: 700; }
   .stat span { font-size: 14px; color: var(--ink-3); }
+  a.stat { text-decoration: none; transition: background .15s; }
+  a.stat:hover { background: var(--bg-alt); }
+  a.stat:hover b { color: var(--accent-ink); }
 
   /* ---------- Sections ---------- */
   section.block { padding: 88px 0; }
   section.alt { background: var(--bg-alt); }
   .sec-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 36px; flex-wrap: wrap; }
-  .sec-num { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+  .sec-num { font-family: var(--mono); font-size: 13px; color: var(--accent-ink); }
   h2 { font-size: clamp(30px, 4vw, 42px); letter-spacing: -.025em; line-height: 1.1; margin: 6px 0 0; font-weight: 750; }
   .sec-head p { color: var(--ink-2); max-width: 460px; margin: 0; }
   h3 { margin: 0; font-size: 18px; letter-spacing: -.01em; }
+  h1, h2, h3 { text-wrap: balance; }
 
   .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; }
   .about-grid p { color: var(--ink-2); margin: 0 0 16px; font-size: 17px; }
@@ -140,7 +165,7 @@
   .timeline { position: relative; margin: 0; padding: 0; list-style: none; }
   .timeline::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
   .org { position: relative; padding-left: 40px; }
-  .org + .org { margin-top: 36px; }
+  .org + .org { margin-top: 28px; }
   .org::before {
     content: ""; position: absolute; left: 0; top: 6px; width: 16px; height: 16px; border-radius: 50%;
     background: var(--bg); border: 3px solid var(--accent);
@@ -148,8 +173,18 @@
   .org-head { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: baseline; }
   .org-head h3 { font-size: 21px; }
   .when { font-family: var(--mono); font-size: 13px; color: var(--ink-3); white-space: nowrap; }
-  .roles { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
-  .role { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+  .roles { margin: 14px 0 0; padding: 0; list-style: none; background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .role { padding: 14px 18px; }
+  .role + .role { border-top: 1px solid var(--line); }
+  .js [data-expand]:not(.open) .more, .js [data-expand]:not(.open) li.extra { display: none; }
+  .more-btn { display: none; }
+  .js .more-btn {
+    display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 6px 2px; border: 0; background: none; cursor: pointer;
+    font: 500 13px var(--mono); color: var(--accent-ink);
+  }
+  .more-btn::after { content: ""; width: 7px; height: 7px; border-right: 1.6px solid currentColor; border-bottom: 1.6px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .2s; }
+  .open > .more-btn::after { transform: translateY(1px) rotate(-135deg); }
+  .more-btn:hover { text-decoration: underline; text-underline-offset: 3px; }
   .role-top { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
   .role-top b { font-weight: 600; }
   .role p { margin: 6px 0 0; color: var(--ink-2); font-size: 15px; }
@@ -160,14 +195,14 @@
   .r-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .r-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
   .r-card h3 { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-  .r-card h3 .n { font-family: var(--mono); font-size: 12px; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 999px; }
+  .r-card h3 .n { font-family: var(--mono); font-size: 12px; color: var(--accent-ink); background: var(--accent-soft); padding: 2px 8px; border-radius: 999px; }
   .r-list { margin: 0; padding: 0; list-style: none; counter-reset: r; }
   .r-list li { counter-increment: r; position: relative; padding: 10px 0 10px 34px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 15px; }
   .r-list li:first-child { border-top: 0; }
   .r-list li::before { content: counter(r, decimal-leading-zero); position: absolute; left: 0; top: 11px; font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
   .r-card.wide { grid-column: 1 / -1; }
   .r-list a.pat { text-decoration: none; color: var(--ink); }
-  .r-list a.pat:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  .r-list a.pat:hover { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; }
   .pno { display: block; font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin-top: 3px; }
   .honors { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
   .honor { border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; font-size: 15px; color: var(--ink-2); background: var(--bg); }
@@ -200,7 +235,7 @@
   .thumb.bloom { background: linear-gradient(135deg, #ffe3e8, #ffd1b8); }
   .thumb.ezdraw { background: radial-gradient(circle, rgba(0,0,0,.18) 1.2px, transparent 1.4px) 0 0 / 18px 18px, #fbfbfa; }
   .body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
-  .tag { font-family: var(--mono); font-size: 12px; color: var(--accent); }
+  .tag { font-family: var(--mono); font-size: 12px; color: var(--accent-ink); }
   .body p { margin: 0; color: var(--ink-2); font-size: 15px; flex: 1; }
   .go { font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; }
   .go::after { content: "→"; transition: transform .2s; }
@@ -243,13 +278,22 @@
   }
   @media (max-width: 640px) {
     .wrap { padding: 0 16px; }
-    .nav nav { display: none; }
     .theme-btn { margin-left: auto; }
-    .hero { padding: 40px 0 48px; }
+    .menu-btn { display: grid; margin-left: 0; }
+    .nav nav {
+      display: none; position: absolute; top: 64px; left: 12px; right: 12px; flex-direction: column; gap: 2px;
+      background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 8px; box-shadow: var(--shadow);
+      overflow: visible;
+    }
+    .nav.open nav { display: flex; }
+    .nav nav a { font-size: 17px; padding: 12px 14px; border-radius: 10px; }
+    .hero { padding: 32px 0 8px; }
     section.block { padding: 64px 0; }
     .cards, .cards.two { grid-template-columns: 1fr; }
     .org { padding-left: 30px; }
+    .role-top { flex-direction: column; gap: 2px; }
     .r-card { padding: 20px; }
+    br.lg { display: none; }
   }
 </style>
 </head>
@@ -258,7 +302,7 @@
 <header class="nav" id="top">
   <div class="wrap">
     <a class="brand" href="#top">Amit Singh<span>.</span></a>
-    <nav aria-label="Sections">
+    <nav aria-label="Sections" id="siteNav">
       <a href="#about">About</a>
       <a href="#career">Career</a>
       <a href="#research">Research</a>
@@ -268,6 +312,9 @@
       <a href="#contact">Contact</a>
     </nav>
     <button class="theme-btn" id="themeBtn" type="button" aria-label="Theme: auto" title="Theme: auto"></button>
+    <button class="theme-btn menu-btn" id="menuBtn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="siteNav">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path class="m1" d="M4 7h16"/><path class="m2" d="M4 12h16"/><path class="m3" d="M4 17h16"/></svg>
+    </button>
   </div>
 </header>
 
@@ -297,7 +344,7 @@
         <div class="stat"><b>15+ yrs</b><span>power &amp; RF electronics</span></div>
         <div class="stat"><b>7</b><span>patents</span></div>
         <div class="stat"><b>3</b><span>countries: India, Singapore, USA</span></div>
-        <div class="stat"><b>Springer</b><span>Theses Award 2017</span></div>
+        <a class="stat" href="https://doi.org/10.1007/978-981-10-8213-9" target="_blank" rel="noopener"><b>1 book</b><span>Springer Theses, 2018</span></a>
       </div>
     </div>
   </section>
@@ -306,7 +353,7 @@
   <section class="block alt" id="about">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div><div class="sec-num">01 / About</div><h2>Where power electronics<br>meets plasma physics</h2></div>
+        <div><div class="sec-num">01 / About</div><h2>Where power electronics<br class="lg"> meets plasma physics</h2></div>
       </div>
       <div class="about-grid">
         <div class="reveal">
@@ -351,7 +398,7 @@
         <p>From defence microwave transmitters to the RF systems inside today's most advanced etch tools.</p>
       </div>
       <ol class="timeline">
-        <li class="org reveal">
+        <li class="org reveal" data-expand>
           <div class="org-head"><h3>Lam Research</h3><span class="when">2022 — present</span></div>
           <ul class="roles">
             <li class="role">
@@ -362,28 +409,29 @@
             <li class="role">
               <div class="role-top"><b>RF Engineer, Staff</b><span class="when">Jan 2024 — Mar 2025</span></div>
               <div class="loc">Bengaluru, India</div>
-              <p>Moved from Lam Research USA to Lam Research India. Technology development for state-of-the-art semiconductor manufacturing equipment, Etch Product Group.</p>
+              <div class="more"><p>Moved from Lam Research USA to Lam Research India. Technology development for state-of-the-art semiconductor manufacturing equipment, Etch Product Group.</p></div>
             </li>
             <li class="role">
               <div class="role-top"><b>RF Engineer 5</b><span class="when">Jul 2022 — Jan 2024</span></div>
               <div class="loc">Fremont, California, USA · O-1 extraordinary-ability visa</div>
-              <p>New technology development for high-aspect-ratio etching, Etch Product Group.</p>
+              <div class="more"><p>New technology development for high-aspect-ratio etching, Etch Product Group.</p></div>
             </li>
             <li class="role">
               <div class="role-top"><b>Principal RF Engineer</b><span class="when">Jan 2022 — Jul 2022</span></div>
               <div class="loc">Singapore</div>
-              <p>RF power electronics and control in the Office of the CTO.</p>
+              <div class="more"><p>RF power electronics and control in the Office of the CTO.</p></div>
             </li>
           </ul>
+          <button class="more-btn" type="button" aria-expanded="false" data-more="Show details" data-less="Hide details">Show details</button>
         </li>
-        <li class="org reveal">
+        <li class="org reveal" data-expand>
           <div class="org-head"><h3>Advanced Energy</h3><span class="when">2018 — 2021</span></div>
           <ul class="roles">
             <li class="role">
               <div class="role-top"><b>Electrical Engineer III</b><span class="when">Jul 2018 — Dec 2021</span></div>
               <div class="loc">Singapore</div>
-              <p>Electrical design of advanced RF products for semiconductor processing:</p>
-              <ul>
+              <p>Electrical design of advanced RF products for semiconductor processing.</p>
+              <ul class="more">
                 <li>Hardware design of RF power electronics, RF impedance matching networks and EMI filters</li>
                 <li>RF component selection, characterisation and testing</li>
                 <li>Modelling and simulation of RF circuits, power converters, magnetics and control</li>
@@ -392,35 +440,37 @@
               </ul>
             </li>
           </ul>
+          <button class="more-btn" type="button" aria-expanded="false" data-more="Show details" data-less="Hide details">Show details</button>
         </li>
-        <li class="org reveal">
+        <li class="org reveal" data-expand>
           <div class="org-head"><h3>National University of Singapore</h3><span class="when">2013 — 2021</span></div>
           <ul class="roles">
             <li class="role">
               <div class="role-top"><b>Adjunct Assistant Professor</b><span class="when">Jul 2020 — Nov 2021</span></div>
-              <p>Taught power electronics: power semiconductor switches, AC-DC, DC-DC and DC-AC converters and their use in large-scale systems.</p>
+              <div class="more"><p>Taught power electronics: power semiconductor switches, AC-DC, DC-DC and DC-AC converters and their use in large-scale systems.</p></div>
             </li>
             <li class="role">
               <div class="role-top"><b>Adjunct Lecturer</b><span class="when">Jan 2019 — Jul 2020</span></div>
             </li>
             <li class="role">
               <div class="role-top"><b>Research Engineer / Fellow</b><span class="when">May 2017 — Jun 2018</span></div>
-              <p>Bidirectional isolated three-phase AC-DC converter interfacing the utility grid with energy storage. Funded by the Energy Market Authority of Singapore, with Rolls-Royce Singapore as industrial collaborator.</p>
+              <div class="more"><p>Bidirectional isolated three-phase AC-DC converter interfacing the utility grid with energy storage. Funded by the Energy Market Authority of Singapore, with Rolls-Royce Singapore as industrial collaborator.</p></div>
             </li>
             <li class="role">
               <div class="role-top"><b>Research Scholar (PhD)</b><span class="when">Jul 2013 — Apr 2017</span></div>
-              <p>Thesis: Analysis and design of power converter topologies for future more-electric aircraft. Recognised with the Springer Theses Award 2017 for outstanding PhD research.</p>
+              <div class="more"><p>Thesis: Analysis and design of power converter topologies for future more-electric aircraft. Recognised with the Springer Theses Award 2017 for outstanding PhD research.</p></div>
             </li>
           </ul>
+          <button class="more-btn" type="button" aria-expanded="false" data-more="Show details" data-less="Hide details">Show details</button>
         </li>
-        <li class="org reveal">
+        <li class="org reveal" data-expand>
           <div class="org-head"><h3>DRDO, Ministry of Defence, India</h3><span class="when">2009 — 2013</span></div>
           <ul class="roles">
             <li class="role">
               <div class="role-top"><b>Scientist B</b><span class="when">Dec 2009 — Jul 2013</span></div>
               <div class="loc">Bengaluru, India</div>
-              <p>Power electronics for microwave transmitters, all to MIL-STD specifications:</p>
-              <ul>
+              <p>Power electronics for microwave transmitters, all to MIL-STD specifications.</p>
+              <ul class="more">
                 <li>High-voltage resonant DC-DC converters and high-voltage modulators</li>
                 <li>Analog control hardware</li>
                 <li>DRDO Technology Group Award from the Scientific Advisor, Ministry of Defence, for a more efficient, higher-power-density HV DC-DC converter</li>
@@ -428,6 +478,7 @@
               </ul>
             </li>
           </ul>
+          <button class="more-btn" type="button" aria-expanded="false" data-more="Show details" data-less="Hide details">Show details</button>
         </li>
       </ol>
     </div>
@@ -441,17 +492,18 @@
         <p>Selected work. The full list of publications and citations is on Google Scholar.</p>
       </div>
       <div class="r-grid">
-        <div class="r-card reveal">
+        <div class="r-card reveal" data-expand>
           <h3>Patents <span class="n">7</span></h3>
           <ol class="r-list">
             <li><a class="pat" href="https://patents.google.com/patent/WO2024249397A1/en" target="_blank" rel="noopener">System and associated methods for controlling radiofrequency power delivery to a plasma processing chamber</a><span class="pno">WO2024249397A1 · 2024</span></li>
             <li><a class="pat" href="https://patents.google.com/patent/WO2024258636A1/en" target="_blank" rel="noopener">Systems and methods for controlling main electrode and edge ring using non-sinusoidal pulses to achieve process rate uniformity</a><span class="pno">WO2024258636A1 · 2024</span></li>
             <li><a class="pat" href="https://patents.google.com/patent/WO2024182321A1/en" target="_blank" rel="noopener">Systems and methods for tuning a frequency of an RF amplifier</a><span class="pno">WO2024182321A1 · 2024</span></li>
             <li><a class="pat" href="https://patents.google.com/patent/WO2025128367A1/en" target="_blank" rel="noopener">Systems and methods for orthogonal control of ion energy for HAR etching</a><span class="pno">WO2025128367A1 · 2025</span></li>
-            <li><a class="pat" href="https://patents.google.com/patent/WO2025128408A1/en" target="_blank" rel="noopener">Systems and methods for achieving ion energy distribution</a><span class="pno">WO2025128408A1 · 2025</span></li>
-            <li><a class="pat" href="https://patents.google.com/patent/WO2025128388A1/en" target="_blank" rel="noopener">Systems and methods for energy recovery and resonant HV switching with voltage balancing</a><span class="pno">WO2025128388A1 · 2025</span></li>
-            <li><a class="pat" href="https://patents.google.com/patent/WO2025264706A1/en" target="_blank" rel="noopener">Systems and methods for recovering RF energy using modular resonant circuits</a><span class="pno">WO2025264706A1 · 2025</span></li>
+            <li class="extra"><a class="pat" href="https://patents.google.com/patent/WO2025128408A1/en" target="_blank" rel="noopener">Systems and methods for achieving ion energy distribution</a><span class="pno">WO2025128408A1 · 2025</span></li>
+            <li class="extra"><a class="pat" href="https://patents.google.com/patent/WO2025128388A1/en" target="_blank" rel="noopener">Systems and methods for energy recovery and resonant HV switching with voltage balancing</a><span class="pno">WO2025128388A1 · 2025</span></li>
+            <li class="extra"><a class="pat" href="https://patents.google.com/patent/WO2025264706A1/en" target="_blank" rel="noopener">Systems and methods for recovering RF energy using modular resonant circuits</a><span class="pno">WO2025264706A1 · 2025</span></li>
           </ol>
+          <button class="more-btn" type="button" aria-expanded="false" data-more="Show all 7 patents" data-less="Show fewer">Show all 7 patents</button>
         </div>
         <div class="r-card reveal">
           <h3>Selected publications</h3>
@@ -511,7 +563,7 @@
           </div>
         </a>
         <a class="card reveal" href="https://amitrishu-del.github.io/bloom/" target="_blank" rel="noopener">
-          <div class="thumb icon bloom"><img src="assets/bloom-icon.png" alt="Bloom Pomodoro app icon" loading="lazy"></div>
+          <div class="thumb icon bloom"><img src="assets/bloom-icon.jpg" alt="Bloom Pomodoro app icon" loading="lazy"></div>
           <div class="body">
             <span class="tag">iPhone · App Store</span>
             <h3>Bloom Pomodoro</h3>
@@ -621,20 +673,43 @@
 
   document.getElementById('yr').textContent = new Date().getFullYear();
 
-  // ---------- Nav border + active section ----------
+  // ---------- Nav border, active section, phone menu ----------
   (function () {
     var nav = document.querySelector('header.nav');
+    var menuBtn = document.getElementById('menuBtn');
     var links = Array.prototype.slice.call(document.querySelectorAll('.nav nav a'));
     var secs = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
     function onScroll() {
       nav.classList.toggle('scrolled', window.scrollY > 8);
       var y = window.scrollY + 120, idx = -1;
       secs.forEach(function (s, i) { if (s && s.offsetTop <= y) idx = i; });
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) idx = links.length - 1;
       links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
     }
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+
+    function setMenu(open) {
+      nav.classList.toggle('open', open);
+      menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+    }
+    menuBtn.addEventListener('click', function (e) { e.stopPropagation(); setMenu(!nav.classList.contains('open')); });
+    links.forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
+    document.addEventListener('click', function (e) { if (!nav.contains(e.target)) setMenu(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+    window.addEventListener('resize', function () { if (window.innerWidth > 640) setMenu(false); });
   })();
+
+  // ---------- Show details / show all ----------
+  document.querySelectorAll('.more-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var box = btn.closest('[data-expand]'), open = !box.classList.contains('open');
+      box.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.textContent = open ? btn.dataset.less : btn.dataset.more;
+    });
+  });
 
   // ---------- Reveal on scroll ----------
   (function () {
@@ -646,45 +721,67 @@
     els.forEach(function (e) { io.observe(e); });
   })();
 
-  // ---------- Hero: RF carrier with pulsed envelope ----------
+  // ---------- Hero: RF carrier with pulsed envelope on a scope graticule ----------
   (function () {
-    var cv = document.getElementById('wave'), ctx = cv.getContext('2d');
+    var cv = document.getElementById('wave'), ctx = cv.getContext('2d'), hero = cv.parentNode;
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var w, h, dpr, t = 0, running = true, base = 0, amp = 30;
+    var w, h, dpr, t = 0, base = 0, amp = 30, raf = 0, visible = true, frame = 0;
+    var c1, c2, cg, px = -1e4, boost = 0;
+    function colors() {
+      var cs = getComputedStyle(document.documentElement);
+      c1 = cs.getPropertyValue('--wave-1').trim(); c2 = cs.getPropertyValue('--wave-2').trim(); cg = cs.getPropertyValue('--grid').trim();
+    }
     function size() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       w = cv.clientWidth; h = cv.clientHeight;
       cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       // run the wave through the gap between the buttons and the stats strip
-      var hero = cv.parentNode.getBoundingClientRect(), btns = cv.parentNode.querySelector('.btns').getBoundingClientRect(), stats = cv.parentNode.querySelector('.stats').getBoundingClientRect();
-      base = ((btns.bottom + stats.top) / 2) - hero.top; amp = Math.max(8, Math.min(28, (stats.top - btns.bottom) / 2 - 6));
+      var r = hero.getBoundingClientRect(), btns = hero.querySelector('.btns').getBoundingClientRect(), stats = hero.querySelector('.stats').getBoundingClientRect();
+      base = ((btns.bottom + stats.top) / 2) - r.top; amp = Math.max(10, Math.min(34, (stats.top - btns.bottom) / 2 - 10));
     }
-    function col(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
     function draw() {
       ctx.clearRect(0, 0, w, h);
-            var c1 = col('--wave-1'), c2 = col('--wave-2');
-      // carrier modulated by a slow pulse envelope (like a pulsed RF bias)
-      ctx.lineWidth = 1.4; ctx.strokeStyle = c1; ctx.beginPath();
+      // graticule: centre line + divisions, like an oscilloscope screen
+      var top = base - amp - 14, bot = base + amp + 14;
+      ctx.strokeStyle = cg; ctx.lineWidth = 1;
+      ctx.beginPath();
+      for (var gx = (w % 64) / 2; gx <= w; gx += 64) { ctx.moveTo(gx + .5, top); ctx.lineTo(gx + .5, bot); }
+      ctx.moveTo(0, top + .5); ctx.lineTo(w, top + .5); ctx.moveTo(0, bot - .5); ctx.lineTo(w, bot - .5);
+      ctx.stroke();
+      ctx.setLineDash([2, 4]); ctx.beginPath(); ctx.moveTo(0, base + .5); ctx.lineTo(w, base + .5); ctx.stroke(); ctx.setLineDash([]);
+      // low-frequency reference wave
+      ctx.lineWidth = 1.4; ctx.strokeStyle = c2; ctx.setLineDash([4, 6]); ctx.beginPath();
+      for (var x2 = 0; x2 <= w; x2 += 3) {
+        var y2 = base + Math.sin(x2 * 0.012 - t * 0.8) * amp * 0.85;
+        x2 ? ctx.lineTo(x2, y2) : ctx.moveTo(x2, y2);
+      }
+      ctx.stroke(); ctx.setLineDash([]);
+      // carrier modulated by a slow pulse envelope (like a pulsed RF bias); swells near the pointer
+      ctx.lineWidth = 2; ctx.strokeStyle = c1; ctx.beginPath();
       for (var x = 0; x <= w; x += 2) {
-        var env = 0.35 + 0.65 * Math.pow(Math.max(0, Math.sin((x / w) * Math.PI * 3 - t * 0.6)), 2);
+        var env = 0.3 + 0.7 * Math.pow(Math.max(0, Math.sin((x / w) * Math.PI * 3 - t * 0.6)), 2);
+        var d = (x - px) / 110; env = Math.min(1.15, env + boost * Math.exp(-d * d));
         var y = base + Math.sin(x * 0.09 - t * 3) * amp * env;
         x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
       }
       ctx.stroke();
-      // low-frequency reference wave
-      ctx.lineWidth = 1.2; ctx.strokeStyle = c2; ctx.setLineDash([4, 6]); ctx.beginPath();
-      for (var x2 = 0; x2 <= w; x2 += 3) {
-        var y2 = base + Math.sin(x2 * 0.012 - t * 0.8) * amp * 0.9;
-        x2 ? ctx.lineTo(x2, y2) : ctx.moveTo(x2, y2);
-      }
-      ctx.stroke(); ctx.setLineDash([]);
     }
-    function loop() { if (!running) return; t += 0.016; draw(); requestAnimationFrame(loop); }
-    size(); window.addEventListener('resize', function () { size(); draw(); });
-    if (reduce) { draw(); return; }
-    document.addEventListener('visibilitychange', function () { running = !document.hidden; if (running) loop(); });
-    new IntersectionObserver(function (e) { var was = running; running = e[0].isIntersecting && !document.hidden; if (running && !was) loop(); }).observe(cv);
-    loop();
+    function loop() {
+      raf = 0; if (!visible || document.hidden) return;
+      t += 0.016; boost += ((px > -1e3 ? 0.6 : 0) - boost) * 0.06;
+      if (++frame % 30 === 0) colors();
+      draw(); raf = requestAnimationFrame(loop);
+    }
+    function start() { if (!raf && !reduce) raf = requestAnimationFrame(loop); }
+    colors(); size(); draw();
+    window.addEventListener('resize', function () { size(); draw(); });
+    document.getElementById('themeBtn').addEventListener('click', function () { colors(); draw(); });
+    if (reduce) return;
+    hero.addEventListener('pointermove', function (e) { px = e.clientX - hero.getBoundingClientRect().left; });
+    hero.addEventListener('pointerleave', function () { px = -1e4; });
+    document.addEventListener('visibilitychange', start);
+    new IntersectionObserver(function (e) { visible = e[0].isIntersecting; if (visible) start(); }).observe(cv);
+    start();
   })();
 </script>
 </body>

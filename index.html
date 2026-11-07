@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Amit Singh, PhD</title>
+<meta name="description" content="Amit Singh, PhD — RF power electronics engineer working on plasma sources for semiconductor etch. Career, research, software, games and photography.">
+<meta property="og:title" content="Amit Singh, PhD">
+<meta property="og:description" content="RF power electronics · Plasma · Simulation-driven design. Career, research, software, games and photography.">
+<meta property="og:image" content="assets/portrait.jpg">
+<link rel="icon" href="assets/portrait.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
+<script>
+  // Apply saved theme before paint (auto / light / dark)
+  try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+<style>
+  :root {
+    --bg: #f7f6f2;
+    --bg-alt: #efede6;
+    --card: #ffffff;
+    --ink: #16181d;
+    --ink-2: #4a4f5a;
+    --ink-3: #80858f;
+    --line: #e1ded5;
+    --accent: #d9481e;      /* plasma orange */
+    --accent-2: #6b4ce6;    /* RF violet */
+    --accent-soft: rgba(217, 72, 30, .09);
+    --wave-1: rgba(217, 72, 30, .55);
+    --wave-2: rgba(107, 76, 230, .45);
+    --shadow: 0 1px 2px rgba(20,20,30,.04), 0 8px 28px rgba(20,20,30,.06);
+    --radius: 18px;
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d0f14; --bg-alt: #12151c; --card: #171a22; --ink: #eef0f4; --ink-2: #b2b7c2; --ink-3: #7c828f;
+      --line: #262a35; --accent: #ff7a45; --accent-2: #9a82ff; --accent-soft: rgba(255,122,69,.12);
+      --wave-1: rgba(255,122,69,.6); --wave-2: rgba(154,130,255,.5);
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35); color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0d0f14; --bg-alt: #12151c; --card: #171a22; --ink: #eef0f4; --ink-2: #b2b7c2; --ink-3: #7c828f;
+    --line: #262a35; --accent: #ff7a45; --accent-2: #9a82ff; --accent-soft: rgba(255,122,69,.12);
+    --wave-1: rgba(255,122,69,.6); --wave-2: rgba(154,130,255,.5);
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35); color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.6 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  }
+  a { color: inherit; }
+  img { display: block; max-width: 100%; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Nav ---------- */
+  header.nav {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: saturate(160%) blur(14px); -webkit-backdrop-filter: saturate(160%) blur(14px);
+    border-bottom: 1px solid transparent; transition: border-color .2s;
+  }
+  header.nav.scrolled { border-bottom-color: var(--line); }
+  .nav .wrap { display: flex; align-items: center; gap: 20px; height: 60px; }
+  .brand { font-weight: 700; text-decoration: none; letter-spacing: -.01em; white-space: nowrap; }
+  .brand span { color: var(--accent); }
+  .nav nav { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
+  .nav nav::-webkit-scrollbar { display: none; }
+  .nav nav a {
+    text-decoration: none; font-size: 14px; color: var(--ink-2); padding: 6px 10px; border-radius: 8px; white-space: nowrap;
+  }
+  .nav nav a:hover, .nav nav a.active { color: var(--ink); background: var(--bg-alt); }
+  .theme-btn {
+    flex: none; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line);
+    background: var(--card); color: var(--ink-2); display: grid; place-items: center; cursor: pointer;
+  }
+  .theme-btn:hover { color: var(--ink); }
+  .theme-btn svg { width: 17px; height: 17px; }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; overflow: hidden; padding: 72px 0 64px; }
+  #wave { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .9; }
+  .hero .wrap { position: relative; display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 13px; color: var(--accent); letter-spacing: .02em;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+  h1 { font-size: clamp(40px, 6.4vw, 72px); line-height: 1.02; letter-spacing: -.035em; margin: 16px 0 18px; font-weight: 800; }
+  .lede { font-size: clamp(17px, 2vw, 20px); color: var(--ink-2); max-width: 620px; margin: 0 0 28px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 15px;
+    padding: 11px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink);
+    transition: transform .15s, border-color .15s;
+  }
+  .btn:hover { transform: translateY(-1px); border-color: var(--ink-3); }
+  .btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .btn svg { width: 16px; height: 16px; }
+  .portrait {
+    width: 260px; height: 260px; border-radius: 50%; object-fit: cover;
+    border: 6px solid var(--card); box-shadow: var(--shadow), 0 0 0 1px var(--line);
+  }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-top: 88px; position: relative; }
+  .stat { background: var(--card); padding: 20px 22px; }
+  .stat b { display: block; font-size: 28px; letter-spacing: -.02em; font-weight: 700; }
+  .stat span { font-size: 14px; color: var(--ink-3); }
+
+  /* ---------- Sections ---------- */
+  section.block { padding: 88px 0; }
+  section.alt { background: var(--bg-alt); }
+  .sec-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 36px; flex-wrap: wrap; }
+  .sec-num { font-family: var(--mono); font-size: 13px; color: var(--accent); }
+  h2 { font-size: clamp(30px, 4vw, 42px); letter-spacing: -.025em; line-height: 1.1; margin: 6px 0 0; font-weight: 750; }
+  .sec-head p { color: var(--ink-2); max-width: 460px; margin: 0; }
+  h3 { margin: 0; font-size: 18px; letter-spacing: -.01em; }
+
+  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; }
+  .about-grid p { color: var(--ink-2); margin: 0 0 16px; font-size: 17px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { font-size: 13px; padding: 6px 12px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); color: var(--ink-2); }
+  .side-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+  .side-card h4 { margin: 0 0 12px; font-size: 13px; font-family: var(--mono); color: var(--ink-3); font-weight: 500; text-transform: uppercase; letter-spacing: .06em; }
+  .side-card + .side-card { margin-top: 16px; }
+  .edu { margin: 0; padding: 0; list-style: none; }
+  .edu li + li { margin-top: 14px; }
+  .edu b { display: block; font-weight: 600; }
+  .edu span { color: var(--ink-3); font-size: 14px; }
+
+  /* Timeline */
+  .timeline { position: relative; margin: 0; padding: 0; list-style: none; }
+  .timeline::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
+  .org { position: relative; padding-left: 40px; }
+  .org + .org { margin-top: 36px; }
+  .org::before {
+    content: ""; position: absolute; left: 0; top: 6px; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--bg); border: 3px solid var(--accent);
+  }
+  .org-head { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: baseline; }
+  .org-head h3 { font-size: 21px; }
+  .when { font-family: var(--mono); font-size: 13px; color: var(--ink-3); white-space: nowrap; }
+  .roles { margin: 14px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+  .role { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+  .role-top { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .role-top b { font-weight: 600; }
+  .role p { margin: 6px 0 0; color: var(--ink-2); font-size: 15px; }
+  .role ul { margin: 8px 0 0; padding-left: 18px; color: var(--ink-2); font-size: 15px; }
+  .loc { color: var(--ink-3); font-size: 14px; }
+
+  /* Research */
+  .r-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .r-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
+  .r-card h3 { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .r-card h3 .n { font-family: var(--mono); font-size: 12px; color: var(--accent); background: var(--accent-soft); padding: 2px 8px; border-radius: 999px; }
+  .r-list { margin: 0; padding: 0; list-style: none; counter-reset: r; }
+  .r-list li { counter-increment: r; position: relative; padding: 10px 0 10px 34px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 15px; }
+  .r-list li:first-child { border-top: 0; }
+  .r-list li::before { content: counter(r, decimal-leading-zero); position: absolute; left: 0; top: 11px; font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+  .r-card.wide { grid-column: 1 / -1; }
+  .honors { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .honor { border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; font-size: 15px; color: var(--ink-2); background: var(--bg); }
+  .honor b { display: block; color: var(--ink); font-weight: 600; margin-bottom: 2px; }
+  .scholar-row { margin-top: 20px; }
+
+  /* Project cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+  .cards.two { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+  .card {
+    display: flex; flex-direction: column; text-decoration: none; background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius); overflow: hidden; transition: transform .2s, box-shadow .2s, border-color .2s;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--ink-3); }
+  .thumb { aspect-ratio: 16 / 10; background: var(--bg-alt); overflow: hidden; position: relative; }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform .4s; }
+  .card:hover .thumb img { transform: scale(1.03); }
+  .thumb.icon { display: grid; place-items: center; }
+  .thumb.icon img { width: 42%; height: auto; object-fit: contain; border-radius: 22%; box-shadow: 0 12px 30px rgba(0,0,0,.18); }
+  .thumb.bloom { background: linear-gradient(135deg, #ffe3e8, #ffd1b8); }
+  .thumb.ezdraw { background: radial-gradient(circle, rgba(0,0,0,.18) 1.2px, transparent 1.4px) 0 0 / 18px 18px, #fbfbfa; }
+  .body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .tag { font-family: var(--mono); font-size: 12px; color: var(--accent); }
+  .body p { margin: 0; color: var(--ink-2); font-size: 15px; flex: 1; }
+  .go { font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; }
+  .go::after { content: "→"; transition: transform .2s; }
+  .card:hover .go::after { transform: translateX(3px); }
+
+  .photo-feature {
+    display: grid; grid-template-columns: 1.3fr 1fr; text-decoration: none; background: #141414; color: #f4efe6;
+    border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); transition: transform .2s, box-shadow .2s;
+  }
+  .photo-feature:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .mosaic { display: grid; grid-template-columns: 1.5fr 1fr; grid-template-rows: 1fr 1fr; gap: 3px; min-height: 340px; }
+  .mosaic img { width: 100%; height: 100%; object-fit: cover; }
+  .mosaic img:first-child { grid-row: 1 / 3; }
+  .photo-feature .txt { padding: 40px; display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+  .photo-feature .tag { color: #c9a45c; }
+  .photo-feature h3 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 40px; font-weight: 500; line-height: 1.05; letter-spacing: 0; }
+  .photo-feature p { margin: 0; color: #c8c1b4; }
+  .photo-feature .go { color: #c9a45c; }
+
+  /* Contact */
+  .contact { text-align: center; }
+  .contact h2 { margin-bottom: 12px; }
+  .contact p { color: var(--ink-2); max-width: 560px; margin: 0 auto 28px; font-size: 17px; }
+  .contact .btns { justify-content: center; }
+  footer { padding: 32px 0 48px; color: var(--ink-3); font-size: 14px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 24px; }
+
+  /* Reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    .hero .wrap { grid-template-columns: 1fr; }
+    .portrait { width: 140px; height: 140px; order: -1; border-width: 4px; }
+    .about-grid, .r-grid, .photo-feature { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .photo-feature .txt { padding: 28px; }
+  }
+  @media (max-width: 640px) {
+    .wrap { padding: 0 16px; }
+    .nav nav { display: none; }
+    .theme-btn { margin-left: auto; }
+    .hero { padding: 40px 0 48px; }
+    section.block { padding: 64px 0; }
+    .cards, .cards.two { grid-template-columns: 1fr; }
+    .org { padding-left: 30px; }
+    .r-card { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav" id="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Amit Singh<span>.</span></a>
+    <nav aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#career">Career</a>
+      <a href="#research">Research</a>
+      <a href="#software">Software</a>
+      <a href="#games">Games</a>
+      <a href="#photography">Photography</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Theme: auto" title="Theme: auto"></button>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <canvas id="wave" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">RF power electronics · plasma · simulation</div>
+        <h1>Amit Singh, PhD</h1>
+        <p class="lede">I design the RF power that lights the plasma inside semiconductor etch tools. Senior Member of Technical Staff at Lam Research, Bengaluru. Outside work I build simulators, small games for my son, and take photographs.</p>
+        <div class="btns">
+          <a class="btn primary" href="#career">See my work</a>
+          <a class="btn" href="https://www.linkedin.com/in/amitksinghnus/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            LinkedIn</a>
+          <a class="btn" href="https://scholar.google.com.sg/citations?user=wc_4waUAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.84 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.16 4.44L24 9.5z"/></svg>
+            Google Scholar</a>
+        </div>
+      </div>
+      <img class="portrait" src="assets/portrait.jpg" alt="Portrait of Amit Singh" width="260" height="260">
+    </div>
+    <div class="wrap">
+      <div class="stats reveal">
+        <div class="stat"><b>15+ yrs</b><span>power &amp; RF electronics</span></div>
+        <div class="stat"><b>5</b><span>patents</span></div>
+        <div class="stat"><b>3</b><span>countries: India, Singapore, USA</span></div>
+        <div class="stat"><b>Springer</b><span>Theses Award 2017</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="block alt" id="about">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><div class="sec-num">01 / About</div><h2>Where power electronics<br>meets plasma physics</h2></div>
+      </div>
+      <div class="about-grid">
+        <div class="reveal">
+          <p>I work on RF power electronics and the control of RF generators and plasma sources for semiconductor processing equipment. My focus is high-frequency power delivery, converter design, and the modelling and control problems that sit between power electronics and plasma physics.</p>
+          <p>Over the years I've designed RF power sources and generators, ultra-high-voltage high-frequency supplies, converters for energy storage and renewable integration, and high-voltage modulators for microwave transmitters. My path has run from India's DRDO, through a PhD and teaching at the National University of Singapore, to Advanced Energy and Lam Research in Singapore, California and now Bengaluru.</p>
+          <p>I like bridging deep theory with practical, simulation-driven engineering, and I'm always happy to connect with people working across RF, power electronics and plasma systems.</p>
+          <div class="chips">
+            <span class="chip">RF generators</span><span class="chip">Impedance matching</span><span class="chip">Resonant converters</span>
+            <span class="chip">HV / HF magnetics</span><span class="chip">Ion energy control</span><span class="chip">Plasma sources</span>
+            <span class="chip">Circuit simulation</span><span class="chip">Analog &amp; digital control</span><span class="chip">Python</span>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="side-card">
+            <h4>Education</h4>
+            <ul class="edu">
+              <li><b>PhD, Electrical &amp; Computer Engineering</b><span>National University of Singapore · 2013–2017</span></li>
+              <li><b>B.Tech, Electrical Engineering</b><span>IIT (BHU) Varanasi</span></li>
+            </ul>
+          </div>
+          <div class="side-card">
+            <h4>Certifications</h4>
+            <ul class="edu">
+              <li><b>Magnetics for Power Electronic Converters</b></li>
+              <li><b>Introduction to Computer Science and Programming Using Python</b><span>edX, verified</span></li>
+            </ul>
+          </div>
+          <div class="side-card">
+            <h4>Languages</h4>
+            <div class="chips"><span class="chip">English</span><span class="chip">Hindi</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Career -->
+  <section class="block" id="career">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><div class="sec-num">02 / Career</div><h2>Experience</h2></div>
+        <p>From defence microwave transmitters to the RF systems inside today's most advanced etch tools.</p>
+      </div>
+      <ol class="timeline">
+        <li class="org reveal">
+          <div class="org-head"><h3>Lam Research</h3><span class="when">2022 — present</span></div>
+          <ul class="roles">
+            <li class="role">
+              <div class="role-top"><b>Senior Member of Technical Staff, RF Engineering</b><span class="when">Mar 2025 — present</span></div>
+              <div class="loc">Bengaluru, India</div>
+              <p>RF technology development for next-generation semiconductor etching equipment.</p>
+            </li>
+            <li class="role">
+              <div class="role-top"><b>RF Engineer, Staff</b><span class="when">Jan 2024 — Mar 2025</span></div>
+              <div class="loc">Bengaluru, India</div>
+              <p>Moved from Lam Research USA to Lam Research India. Technology development for state-of-the-art semiconductor manufacturing equipment, Etch Product Group.</p>
+            </li>
+            <li class="role">
+              <div class="role-top"><b>RF Engineer 5</b><span class="when">Jul 2022 — Jan 2024</span></div>
+              <div class="loc">Fremont, California, USA · O-1 extraordinary-ability visa</div>
+              <p>New technology development for high-aspect-ratio etching, Etch Product Group.</p>
+            </li>
+            <li class="role">
+              <div class="role-top"><b>Principal RF Engineer</b><span class="when">Jan 2022 — Jul 2022</span></div>
+              <div class="loc">Singapore</div>
+              <p>RF power electronics and control in the Office of the CTO.</p>
+            </li>
+          </ul>
+        </li>
+        <li class="org reveal">
+          <div class="org-head"><h3>Advanced Energy</h3><span class="when">2018 — 2021</span></div>
+          <ul class="roles">
+            <li class="role">
+              <div class="role-top"><b>Electrical Engineer III</b><span class="when">Jul 2018 — Dec 2021</span></div>
+              <div class="loc">Singapore</div>
+              <p>Electrical design of advanced RF products for semiconductor processing:</p>
+              <ul>
+                <li>Hardware design of RF power electronics, RF impedance matching networks and EMI filters</li>
+                <li>RF component selection, characterisation and testing</li>
+                <li>Modelling and simulation of RF circuits, power converters, magnetics and control</li>
+                <li>Control algorithms and analog / digital control hardware</li>
+                <li>High-frequency, high-power magnetics design</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="org reveal">
+          <div class="org-head"><h3>National University of Singapore</h3><span class="when">2013 — 2021</span></div>
+          <ul class="roles">
+            <li class="role">
+              <div class="role-top"><b>Adjunct Assistant Professor</b><span class="when">Jul 2020 — Nov 2021</span></div>
+              <p>Taught power electronics: power semiconductor switches, AC-DC, DC-DC and DC-AC converters and their use in large-scale systems.</p>
+            </li>
+            <li class="role">
+              <div class="role-top"><b>Adjunct Lecturer</b><span class="when">Jan 2019 — Jul 2020</span></div>
+            </li>
+            <li class="role">
+              <div class="role-top"><b>Research Engineer / Fellow</b><span class="when">May 2017 — Jun 2018</span></div>
+              <p>Bidirectional isolated three-phase AC-DC converter interfacing the utility grid with energy storage. Funded by the Energy Market Authority of Singapore, with Rolls-Royce Singapore as industrial collaborator.</p>
+            </li>
+            <li class="role">
+              <div class="role-top"><b>Research Scholar (PhD)</b><span class="when">Jul 2013 — Apr 2017</span></div>
+              <p>Thesis: Analysis and design of power converter topologies for future more-electric aircraft. Recognised with the Springer Theses Award 2017 for outstanding PhD research.</p>
+            </li>
+          </ul>
+        </li>
+        <li class="org reveal">
+          <div class="org-head"><h3>DRDO, Ministry of Defence, India</h3><span class="when">2009 — 2013</span></div>
+          <ul class="roles">
+            <li class="role">
+              <div class="role-top"><b>Scientist B</b><span class="when">Dec 2009 — Jul 2013</span></div>
+              <div class="loc">Bengaluru, India</div>
+              <p>Power electronics for microwave transmitters, all to MIL-STD specifications:</p>
+              <ul>
+                <li>High-voltage resonant DC-DC converters and high-voltage modulators</li>
+                <li>Analog control hardware</li>
+                <li>DRDO Technology Group Award from the Scientific Advisor to the Defence Minister for a more efficient, higher-power-density HV DC-DC converter</li>
+                <li>Mentored two bachelor's students and guided one master's student</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Research -->
+  <section class="block alt" id="research">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><div class="sec-num">03 / Research</div><h2>Patents, papers &amp; honours</h2></div>
+        <p>Selected work. The full list of publications and citations is on Google Scholar.</p>
+      </div>
+      <div class="r-grid">
+        <div class="r-card reveal">
+          <h3>Patents <span class="n">5</span></h3>
+          <ol class="r-list">
+            <li>System and associated methods for controlling radiofrequency power delivery to a plasma processing chamber</li>
+            <li>Systems and methods for orthogonal control of ion energy for HAR etching</li>
+            <li>Systems and methods for controlling main electrode and edge ring using non-sinusoidal pulses to achieve process rate uniformity</li>
+            <li>Systems and methods for energy recovery and resonant HV switching with voltage balancing</li>
+            <li>Systems and methods for achieving ion energy distribution</li>
+          </ol>
+        </div>
+        <div class="r-card reveal">
+          <h3>Selected publications</h3>
+          <ol class="r-list">
+            <li>A single-stage matrix based isolated three-phase AC-DC converter with novel current commutation</li>
+            <li>A novel high output voltage DC-DC LLC resonant converter with symmetric voltage quadrupler rectifier for RF communications</li>
+            <li>A matrix based non-isolated three-phase AC-DC rectifier with large step-down voltage gain</li>
+            <li>High voltage high frequency resonant DC-DC converter for electric propulsion for micro and nanosatellites</li>
+            <li>Analysis and design of SQR based high voltage LLC resonant DC-DC converter</li>
+          </ol>
+          <div class="scholar-row"><a class="btn" href="https://scholar.google.com.sg/citations?user=wc_4waUAAAAJ&amp;hl=en" target="_blank" rel="noopener">All publications on Google Scholar →</a></div>
+        </div>
+        <div class="r-card wide reveal">
+          <h3>Honours &amp; awards</h3>
+          <div class="honors">
+            <div class="honor"><b>Springer Theses Award</b>2017, outstanding PhD research</div>
+            <div class="honor"><b>Best Session Presentation</b>IECON 2016</div>
+            <div class="honor"><b>DRDO Technology Group Award</b>Ministry of Defence, India</div>
+            <div class="honor"><b>3rd prize, oral presentation</b>Graduate Student Symposium 2014, ECE, NUS</div>
+            <div class="honor"><b>IEEE-HKN member</b>NUS Eta Kappa Nu honour society</div>
+            <div class="honor"><b>NUS Research Scholarship</b>PhD funding</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Software -->
+  <section class="block" id="software">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><div class="sec-num">04 / Software</div><h2>Things I've built</h2></div>
+        <p>Tools I wanted to exist, built in my own time.</p>
+      </div>
+      <div class="cards two">
+        <a class="card reveal" href="https://amitrishu-del.github.io/xcircuitsim/" target="_blank" rel="noopener">
+          <div class="thumb"><img src="assets/shot-xcircuitsim.jpg" alt="Xcircuitsim schematic editor and waveform viewer" loading="lazy"></div>
+          <div class="body">
+            <span class="tag">macOS · Python · beta</span>
+            <h3>Xcircuitsim</h3>
+            <p>A circuit simulator for power and RF engineers: draw a schematic, then run DC, transient, AC / Bode, parameter sweeps and FFT. Imports SPICE netlists and libraries, with an interactive Smith chart.</p>
+            <span class="go">Visit the site &amp; join the beta</span>
+          </div>
+        </a>
+        <a class="card reveal" href="https://amitrishu-del.github.io/bloom/" target="_blank" rel="noopener">
+          <div class="thumb icon bloom"><img src="assets/bloom-icon.png" alt="Bloom Pomodoro app icon" loading="lazy"></div>
+          <div class="body">
+            <span class="tag">iPhone · App Store</span>
+            <h3>Bloom Pomodoro</h3>
+            <p>A calm focus timer where every finished session grows a flower. Bloom Pro adds a garden, more flowers and guided breathing with Apple Health.</p>
+            <span class="go">Learn more</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Games -->
+  <section class="block alt" id="games">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><div class="sec-num">05 / Games &amp; toys</div><h2>Made for my son</h2></div>
+        <p>Small web games and toys that run in any browser, on a phone, tablet or computer. No install needed.</p>
+      </div>
+      <div class="cards">
+        <a class="card reveal" href="https://amitrishu-del.github.io/plasma-glow/" target="_blank" rel="noopener">
+          <div class="thumb"><img src="assets/shot-plasma-glow.jpg" alt="Plasma Glow: a glowing plasma globe with an oscilloscope" loading="lazy"></div>
+          <div class="body"><span class="tag">Toy · physics</span><h3>Plasma Glow</h3><p>A plasma globe you can touch. Change the voltage and the gas, and watch the voltage and current on a little oscilloscope.</p><span class="go">Play</span></div>
+        </a>
+        <a class="card reveal" href="https://amitrishu-del.github.io/flag-globe/" target="_blank" rel="noopener">
+          <div class="thumb"><img src="assets/shot-flag-globe.jpg" alt="Anant's Flag Globe: a spinning world map" loading="lazy"></div>
+          <div class="body"><span class="tag">Game · geography</span><h3>Anant's Flag Globe</h3><p>Spin the globe, tap a country and collect its flag. All 242 of them.</p><span class="go">Play</span></div>
+        </a>
+        <a class="card reveal" href="https://amitrishu-del.github.io/yes-or-no/" target="_blank" rel="noopener">
+          <div class="thumb"><img src="assets/shot-yes-or-no.jpg" alt="Yes or No? game menu" loading="lazy"></div>
+          <div class="body"><span class="tag">Game · for little ones</span><h3>Yes or No?</h3><p>A picture quiz for young children: animals, food, vehicles, colours, shapes, space, flags and feelings.</p><span class="go">Play</span></div>
+        </a>
+        <a class="card reveal" href="https://amitrishu-del.github.io/easyform/" target="_blank" rel="noopener">
+          <div class="thumb icon ezdraw"><img src="assets/ezdraw-icon.png" alt="EzDraw app icon" loading="lazy"></div>
+          <div class="body"><span class="tag">App · iPad</span><h3>EzDraw</h3><p>A light, fast drawing board for Apple Pencil, built because the big drawing apps were too heavy for an older iPad.</p><span class="go">Open</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photography -->
+  <section class="block" id="photography">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div><div class="sec-num">06 / Photography</div><h2>A camera comes everywhere</h2></div>
+        <p>Photographs from trips and slow days, shot on a Canon EOS R6 Mark II.</p>
+      </div>
+      <a class="photo-feature reveal" href="https://lenseandsensibility.com" target="_blank" rel="noopener">
+        <div class="mosaic">
+          <img src="assets/photo-painted-stork.jpg" alt="Painted storks" loading="lazy">
+          <img src="assets/photo-leopard.jpg" alt="A leopard napping" loading="lazy">
+          <img src="assets/photo-toucan.jpg" alt="A toucan" loading="lazy">
+        </div>
+        <div class="txt">
+          <span class="tag">lenseandsensibility.com</span>
+          <h3>Lense and Sensibility</h3>
+          <p>My photography site, one collection per tab. Tap any photo to see it full screen with a short note about the moment.</p>
+          <span class="go">View the photographs</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="block alt contact" id="contact">
+    <div class="wrap reveal">
+      <div class="sec-num">07 / Contact</div>
+      <h2>Let's talk</h2>
+      <p>Working on RF power, plasma sources or power electronics? Interested in trying Xcircuitsim? I'd be glad to hear from you.</p>
+      <div class="btns">
+        <a class="btn primary" href="mailto:amit00971x@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          amit00971x@gmail.com</a>
+        <a class="btn" href="https://www.linkedin.com/in/amitksinghnus/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://scholar.google.com.sg/citations?user=wc_4waUAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+        <a class="btn" href="https://github.com/amitrishu-del" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> Amit Singh</span>
+    <span>Bengaluru, India</span>
+  </div>
+</footer>
+
+<script>
+  // ---------- Theme switch: auto → light → dark ----------
+  (function () {
+    var btn = document.getElementById('themeBtn');
+    var icons = {
+      auto: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg>',
+      light: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+      dark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>'
+    };
+    function current() { return document.documentElement.dataset.theme || 'auto'; }
+    function render() { var m = current(); btn.innerHTML = icons[m]; btn.title = btn.ariaLabel = 'Theme: ' + m; }
+    btn.addEventListener('click', function () {
+      var next = { auto: 'light', light: 'dark', dark: 'auto' }[current()];
+      if (next === 'auto') delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme = next;
+      try { next === 'auto' ? localStorage.removeItem('theme') : localStorage.setItem('theme', next); } catch (e) {}
+      render();
+    });
+    render();
+  })();
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // ---------- Nav border + active section ----------
+  (function () {
+    var nav = document.querySelector('header.nav');
+    var links = Array.prototype.slice.call(document.querySelectorAll('.nav nav a'));
+    var secs = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+    function onScroll() {
+      nav.classList.toggle('scrolled', window.scrollY > 8);
+      var y = window.scrollY + 120, idx = -1;
+      secs.forEach(function (s, i) { if (s && s.offsetTop <= y) idx = i; });
+      links.forEach(function (a, i) { a.classList.toggle('active', i === idx); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+
+  // ---------- Reveal on scroll ----------
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (e) { io.observe(e); });
+  })();
+
+  // ---------- Hero: RF carrier with pulsed envelope ----------
+  (function () {
+    var cv = document.getElementById('wave'), ctx = cv.getContext('2d');
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var w, h, dpr, t = 0, running = true, base = 0, amp = 30;
+    function size() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = cv.clientWidth; h = cv.clientHeight;
+      cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      // run the wave through the gap between the buttons and the stats strip
+      var hero = cv.parentNode.getBoundingClientRect(), btns = cv.parentNode.querySelector('.btns').getBoundingClientRect(), stats = cv.parentNode.querySelector('.stats').getBoundingClientRect();
+      base = ((btns.bottom + stats.top) / 2) - hero.top; amp = Math.max(8, Math.min(28, (stats.top - btns.bottom) / 2 - 6));
+    }
+    function col(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+            var c1 = col('--wave-1'), c2 = col('--wave-2');
+      // carrier modulated by a slow pulse envelope (like a pulsed RF bias)
+      ctx.lineWidth = 1.4; ctx.strokeStyle = c1; ctx.beginPath();
+      for (var x = 0; x <= w; x += 2) {
+        var env = 0.35 + 0.65 * Math.pow(Math.max(0, Math.sin((x / w) * Math.PI * 3 - t * 0.6)), 2);
+        var y = base + Math.sin(x * 0.09 - t * 3) * amp * env;
+        x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      }
+      ctx.stroke();
+      // low-frequency reference wave
+      ctx.lineWidth = 1.2; ctx.strokeStyle = c2; ctx.setLineDash([4, 6]); ctx.beginPath();
+      for (var x2 = 0; x2 <= w; x2 += 3) {
+        var y2 = base + Math.sin(x2 * 0.012 - t * 0.8) * amp * 0.9;
+        x2 ? ctx.lineTo(x2, y2) : ctx.moveTo(x2, y2);
+      }
+      ctx.stroke(); ctx.setLineDash([]);
+    }
+    function loop() { if (!running) return; t += 0.016; draw(); requestAnimationFrame(loop); }
+    size(); window.addEventListener('resize', function () { size(); draw(); });
+    if (reduce) { draw(); return; }
+    document.addEventListener('visibilitychange', function () { running = !document.hidden; if (running) loop(); });
+    new IntersectionObserver(function (e) { var was = running; running = e[0].isIntersecting && !document.hidden; if (running && !was) loop(); }).observe(cv);
+    loop();
+  })();
+</script>
+</body>
+</html>

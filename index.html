@@ -213,6 +213,7 @@
   .r-list a.pat:hover { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; }
   .pno { display: block; font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin-top: 3px; }
   .honors { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  @media (min-width: 1000px) { .honors { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
   .honor { border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; font-size: 16px; color: var(--ink-2); background: var(--bg); }
   .honor b { display: block; color: var(--ink); font-weight: 600; margin-bottom: 2px; }
   .scholar-row { margin-top: 20px; }
@@ -579,6 +580,7 @@
             </div>
           </div>
           <div class="honors">
+            <div class="honor"><b>IEEE Senior Member</b>Institute of Electrical and Electronics Engineers</div>
             <div class="honor"><b>Best Session Presentation Award</b>IEEE IECON 2016, Florence, Italy</div>
             <div class="honor"><b>3rd prize, oral presentation</b>Graduate Student Symposium 2014, ECE, NUS</div>
             <div class="honor"><b>IEEE-HKN member</b>NUS Eta Kappa Nu honour society</div>

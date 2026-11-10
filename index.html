@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Amit Singh, PhD</title>
-<meta name="description" content="Amit Singh, PhD — RF power electronics engineer working on plasma sources for semiconductor etch. Career, research, software, games and photography.">
+<meta name="description" content="Amit Singh, PhD. RF power electronics engineer at Lam Research, working on plasma sources for semiconductor etch. Career, research, software, games and photography.">
 <meta property="og:title" content="Amit Singh, PhD">
 <meta property="og:description" content="RF power electronics · Plasma · Simulation-driven design. Career, research, software, games and photography.">
 <link rel="canonical" href="https://amitrishu-del.github.io/">
@@ -131,7 +131,7 @@
     border: 6px solid var(--card); box-shadow: var(--shadow), 0 0 0 1px var(--line);
   }
 
-  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-top: 104px; position: relative; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-top: 168px; position: relative; }
   .stat { background: var(--card); padding: 20px 22px; }
   .stat b { display: block; font-size: 28px; letter-spacing: -.02em; font-weight: 700; }
   .stat span { font-size: 14px; color: var(--ink-3); }
@@ -326,7 +326,7 @@
       <div>
         <div class="eyebrow">RF power electronics · plasma · simulation</div>
         <h1>Amit Singh, PhD</h1>
-        <p class="lede">I design the RF power that lights the plasma inside semiconductor etch tools. Senior Member of Technical Staff at Lam Research, Bengaluru. Outside work I build simulators, small games for my son, and take photographs.</p>
+        <p class="lede">I design the RF power systems that drive the plasma inside semiconductor etch tools. I'm a Senior Member of Technical Staff at Lam Research, with 17 years in power electronics, 7 patent filings and a PhD from NUS. After hours I write my own circuit simulator, build games for my son and photograph wildlife.</p>
         <div class="btns">
           <a class="btn primary" href="#career">See my work</a>
           <a class="btn" href="https://www.linkedin.com/in/amitksinghnus/" target="_blank" rel="noopener">
@@ -341,7 +341,7 @@
     </div>
     <div class="wrap">
       <div class="stats reveal">
-        <div class="stat"><b>15+ yrs</b><span>power &amp; RF electronics</span></div>
+        <div class="stat"><b>17 yrs</b><span>power &amp; RF electronics</span></div>
         <div class="stat"><b>7</b><span>patents</span></div>
         <div class="stat"><b>3</b><span>countries: India, Singapore, USA</span></div>
         <a class="stat" href="https://doi.org/10.1007/978-981-10-8213-9" target="_blank" rel="noopener"><b>1 book</b><span>Springer Theses, 2018</span></a>
@@ -357,9 +357,9 @@
       </div>
       <div class="about-grid">
         <div class="reveal">
-          <p>I work on RF power electronics and the control of RF generators and plasma sources for semiconductor processing equipment. My focus is high-frequency power delivery, converter design, and the modelling and control problems that sit between power electronics and plasma physics.</p>
-          <p>Over the years I've designed RF power sources and generators, ultra-high-voltage high-frequency supplies, converters for energy storage and renewable integration, and high-voltage modulators for microwave transmitters. My path has run from India's DRDO, through a PhD and teaching at the National University of Singapore, to Advanced Energy and Lam Research in Singapore, California and now Bengaluru.</p>
-          <p>I like bridging deep theory with practical, simulation-driven engineering, and I'm always happy to connect with people working across RF, power electronics and plasma systems.</p>
+          <p>At Lam Research I develop RF technology for next-generation etch equipment. Much of my recent work is about shaping the voltage at the wafer: controlling ion energy with pulsed, non-sinusoidal waveforms, and recovering energy that would otherwise be lost. Most of my patent filings are in this area.</p>
+          <p>I came to plasma from power electronics. I started at DRDO in 2009, designing high-voltage converters and modulators for microwave transmitters. My PhD at NUS, on converters for more-electric aircraft, was published by Springer as an outstanding thesis. I then designed RF generators and matching networks at Advanced Energy while teaching power electronics at NUS, and joined Lam in 2022, working in Singapore, California and now Bengaluru.</p>
+          <p>I trust a design once I can simulate it, which is why I ended up writing my own circuit simulator, Xcircuitsim.</p>
           <div class="chips">
             <span class="chip">RF generators</span><span class="chip">Impedance matching</span><span class="chip">Resonant converters</span>
             <span class="chip">HV / HF magnetics</span><span class="chip">Ion energy control</span><span class="chip">Plasma sources</span>
@@ -375,16 +375,12 @@
             </ul>
           </div>
           <div class="side-card">
-            <h4>Certifications</h4>
+            <h4>Certification</h4>
             <ul class="edu">
               <li><b>Magnetics for Power Electronic Converters</b></li>
-              <li><b>Introduction to Computer Science and Programming Using Python</b><span>edX, verified</span></li>
             </ul>
           </div>
-          <div class="side-card">
-            <h4>Languages</h4>
-            <div class="chips"><span class="chip">English</span><span class="chip">Hindi</span></div>
-          </div>
+          
         </div>
       </div>
     </div>
@@ -737,64 +733,108 @@
     els.forEach(function (e) { io.observe(e); });
   })();
 
-  // ---------- Hero: RF carrier with pulsed envelope on a scope graticule ----------
+  // ---------- Hero: voltage at the wafer -> ion energy distribution ----------
+  // A pulsed, non-sinusoidal bias. When the slope of the negative phase is right, the
+  // wafer voltage stays flat and the ions arrive with one energy (a narrow peak). When
+  // it is off, the voltage drifts and the ion energy spreads. Simplified physics.
   (function () {
     var cv = document.getElementById('wave'), ctx = cv.getContext('2d'), hero = cv.parentNode;
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var w, h, dpr, t = 0, base = 0, amp = 30, raf = 0, visible = true, frame = 0;
-    var c1, c2, cg, px = -1e4, boost = 0;
+    var w, h, dpr, t = 0, raf = 0, visible = true, frame = 0;
+    var c1, c2, cg, cl, top, bot, mid, half, xl, xi0, xi1, period;
+    var k = 0.6, target = null, PW = 0.14, NB = 56, E0 = 0.3, E1 = 1.14, peak0 = 1;
     function colors() {
       var cs = getComputedStyle(document.documentElement);
-      c1 = cs.getPropertyValue('--wave-1').trim(); c2 = cs.getPropertyValue('--wave-2').trim(); cg = cs.getPropertyValue('--grid').trim();
+      c1 = cs.getPropertyValue('--wave-1').trim(); c2 = cs.getPropertyValue('--wave-2').trim();
+      cg = cs.getPropertyValue('--grid').trim(); cl = cs.getPropertyValue('--ink-3').trim();
     }
+    // wafer voltage over one period (phase 0..1), for slope mismatch kk in -1..1
+    function V(ph, kk) {
+      var e = 0.012;
+      var flat = -(0.72 + 0.26 * kk * (((ph - PW) / (1 - PW)) * 2 - 1));
+      if (ph < e) return flat + (0.45 - flat) * (ph / e);            // rising edge
+      if (ph < PW) return 0.45;                                       // short positive pulse
+      if (ph < PW + e) { var f0 = -(0.72 - 0.26 * kk); return 0.45 + (f0 - 0.45) * ((ph - PW) / e); }
+      return flat;
+    }
+    function ied(kk) {
+      var hst = new Array(NB).fill(0), i, n = 240;
+      for (i = 0; i < n; i++) {
+        var ph = PW + 0.02 + (1 - PW - 0.03) * i / (n - 1);
+        var x = (-V(ph, kk) - E0) / (E1 - E0) * (NB - 1), j = Math.floor(x), f = x - j;
+        if (j >= 0 && j < NB - 1) { hst[j] += 1 - f; hst[j + 1] += f; }
+      }
+      for (var pass = 0; pass < 2; pass++) {
+        var o = hst.slice();
+        for (i = 0; i < NB; i++) hst[i] = ((o[i - 2] || 0) + 2 * (o[i - 1] || 0) + 3 * o[i] + 2 * (o[i + 1] || 0) + (o[i + 2] || 0)) / 9;
+      }
+      return hst;
+    }
+    peak0 = Math.max.apply(null, ied(0));
     function size() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       w = cv.clientWidth; h = cv.clientHeight;
       cv.width = w * dpr; cv.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      // run the wave through the gap between the buttons and the stats strip
       var r = hero.getBoundingClientRect(), btns = hero.querySelector('.btns').getBoundingClientRect(), stats = hero.querySelector('.stats').getBoundingClientRect();
-      base = ((btns.bottom + stats.top) / 2) - r.top; amp = Math.max(10, Math.min(34, (stats.top - btns.bottom) / 2 - 10));
+      top = btns.bottom - r.top + 34; bot = stats.top - r.top - 22; mid = (top + bot) / 2; half = (bot - top) / 2;
+      xl = stats.left - r.left; xi1 = stats.right - r.left;
+      xi0 = xi1 - Math.max(110, Math.min(280, (xi1 - xl) * 0.3));
+      period = w < 640 ? 104 : 168;
     }
     function draw() {
       ctx.clearRect(0, 0, w, h);
-      // graticule: centre line + divisions, like an oscilloscope screen
-      var top = base - amp - 14, bot = base + amp + 14;
-      ctx.strokeStyle = cg; ctx.lineWidth = 1;
-      ctx.beginPath();
-      for (var gx = (w % 64) / 2; gx <= w; gx += 64) { ctx.moveTo(gx + .5, top); ctx.lineTo(gx + .5, bot); }
-      ctx.moveTo(0, top + .5); ctx.lineTo(w, top + .5); ctx.moveTo(0, bot - .5); ctx.lineTo(w, bot - .5);
+      var xe = xi0 - 26, x, i;
+      // graticule
+      ctx.strokeStyle = cg; ctx.lineWidth = 1; ctx.beginPath();
+      for (x = xl % 56; x <= xe; x += 56) { ctx.moveTo(x + .5, top); ctx.lineTo(x + .5, bot); }
+      ctx.moveTo(0, top + .5); ctx.lineTo(xe, top + .5); ctx.moveTo(0, bot - .5); ctx.lineTo(xe, bot - .5);
       ctx.stroke();
-      ctx.setLineDash([2, 4]); ctx.beginPath(); ctx.moveTo(0, base + .5); ctx.lineTo(w, base + .5); ctx.stroke(); ctx.setLineDash([]);
-      // low-frequency reference wave
-      ctx.lineWidth = 1.4; ctx.strokeStyle = c2; ctx.setLineDash([4, 6]); ctx.beginPath();
-      for (var x2 = 0; x2 <= w; x2 += 3) {
-        var y2 = base + Math.sin(x2 * 0.012 - t * 0.8) * amp * 0.85;
-        x2 ? ctx.lineTo(x2, y2) : ctx.moveTo(x2, y2);
-      }
-      ctx.stroke(); ctx.setLineDash([]);
-      // carrier modulated by a slow pulse envelope (like a pulsed RF bias); swells near the pointer
-      ctx.lineWidth = 2; ctx.strokeStyle = c1; ctx.beginPath();
-      for (var x = 0; x <= w; x += 2) {
-        var env = 0.3 + 0.7 * Math.pow(Math.max(0, Math.sin((x / w) * Math.PI * 3 - t * 0.6)), 2);
-        var d = (x - px) / 110; env = Math.min(1.15, env + boost * Math.exp(-d * d));
-        var y = base + Math.sin(x * 0.09 - t * 3) * amp * env;
+      // 0 V line
+      var sc = (bot - top - 8) / 1.5, y0 = top + 4 + 0.47 * sc;
+      ctx.setLineDash([2, 4]); ctx.beginPath(); ctx.moveTo(0, y0 + .5); ctx.lineTo(xe, y0 + .5); ctx.stroke(); ctx.setLineDash([]);
+      // voltage trace, scrolling
+      ctx.save(); ctx.beginPath(); ctx.rect(0, top - 2, xe, bot - top + 4); ctx.clip();
+      ctx.lineWidth = 2; ctx.strokeStyle = c1; ctx.lineJoin = 'round'; ctx.beginPath();
+      for (x = 0; x <= xe; x += 1.5) {
+        var ph = ((x / period + t * 0.35) % 1 + 1) % 1, y = y0 - V(ph, k) * sc;
         x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
       }
+      ctx.stroke(); ctx.restore();
+      // ion energy distribution
+      var hst = ied(k), bw = (xi1 - xi0) / (NB - 1), ht = bot - top - 6;
+      ctx.strokeStyle = cg; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(xi0, bot - .5); ctx.lineTo(xi1, bot - .5); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(xi0, bot);
+      for (i = 0; i < NB; i++) ctx.lineTo(xi0 + i * bw, bot - Math.min(1, hst[i] / peak0) * ht);
+      ctx.lineTo(xi1, bot); ctx.closePath();
+      ctx.globalAlpha = 0.28; ctx.fillStyle = c2; ctx.fill(); ctx.globalAlpha = 1;
+      ctx.lineWidth = 1.8; ctx.strokeStyle = c2; ctx.beginPath();
+      for (i = 0; i < NB; i++) { var yy = bot - Math.min(1, hst[i] / peak0) * ht; i ? ctx.lineTo(xi0 + i * bw, yy) : ctx.moveTo(xi0, yy); }
       ctx.stroke();
+      // labels
+      ctx.fillStyle = cl; ctx.font = '500 11px "JetBrains Mono", ui-monospace, monospace'; ctx.textBaseline = 'alphabetic';
+      ctx.textAlign = 'left'; ctx.fillText('voltage at the wafer', xl, top - 9);
+      ctx.fillText(xi1 - xi0 < 150 ? 'ion energy' : 'ion energy distribution', xi0, top - 9);
     }
     function loop() {
       raf = 0; if (!visible || document.hidden) return;
-      t += 0.016; boost += ((px > -1e3 ? 0.6 : 0) - boost) * 0.06;
+      t += 0.016;
+      var goal = target === null ? Math.pow(Math.sin(t * 0.42), 3) : target;   // lingers near the "tuned" state
+      k += (goal - k) * 0.07;
       if (++frame % 30 === 0) colors();
       draw(); raf = requestAnimationFrame(loop);
     }
     function start() { if (!raf && !reduce) raf = requestAnimationFrame(loop); }
     colors(); size(); draw();
     window.addEventListener('resize', function () { size(); draw(); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { size(); draw(); });
     document.getElementById('themeBtn').addEventListener('click', function () { colors(); draw(); });
     if (reduce) return;
-    hero.addEventListener('pointermove', function (e) { px = e.clientX - hero.getBoundingClientRect().left; });
-    hero.addEventListener('pointerleave', function () { px = -1e4; });
+    // pointer: left-right position sets the slope; the centre is the tuned waveform
+    hero.addEventListener('pointermove', function (e) {
+      if (e.pointerType === 'touch') return;
+      var r = hero.getBoundingClientRect(); target = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width) * 2 - 1));
+    });
+    hero.addEventListener('pointerleave', function () { target = null; });
     document.addEventListener('visibilitychange', start);
     new IntersectionObserver(function (e) { visible = e[0].isIntersecting; if (visible) start(); }).observe(cv);
     start();

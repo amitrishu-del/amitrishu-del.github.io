@@ -24,7 +24,7 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500&family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
 <script>
   document.documentElement.classList.add('js');
   // Apply saved theme before paint (auto / light / dark)
@@ -49,6 +49,7 @@
     --shadow: 0 1px 2px rgba(20,20,30,.04), 0 8px 28px rgba(20,20,30,.06);
     --radius: 18px;
     --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --display: "Space Grotesk", Inter, -apple-system, sans-serif;
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
@@ -70,7 +71,7 @@
   html { scroll-behavior: smooth; scroll-padding-top: 72px; }
   body {
     margin: 0; background: var(--bg); color: var(--ink);
-    font: 16px/1.6 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font: 17px/1.6 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
   }
   a { color: inherit; }
@@ -86,7 +87,7 @@
   }
   header.nav.scrolled { border-bottom-color: var(--line); }
   .nav .wrap { display: flex; align-items: center; gap: 20px; height: 60px; }
-  .brand { font-weight: 700; text-decoration: none; letter-spacing: -.01em; white-space: nowrap; }
+  .brand { font-family: var(--display); font-size: 17px; font-weight: 700; text-decoration: none; letter-spacing: -.01em; white-space: nowrap; }
   .brand span { color: var(--accent); }
   .nav nav { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
   .nav nav::-webkit-scrollbar { display: none; }
@@ -111,11 +112,11 @@
   #wave { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .9; }
   .hero .wrap { position: relative; display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center; }
   .eyebrow {
-    font-family: var(--mono); font-size: 13px; color: var(--accent-ink); letter-spacing: .02em;
+    font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--accent-ink);
     display: inline-flex; align-items: center; gap: 8px;
   }
   .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
-  h1 { font-size: clamp(40px, 6.4vw, 72px); line-height: 1.02; letter-spacing: -.035em; margin: 16px 0 18px; font-weight: 800; }
+  h1 { font-family: var(--display); font-size: clamp(42px, 6.6vw, 76px); line-height: 1; letter-spacing: -.03em; margin: 16px 0 20px; font-weight: 700; }
   .lede { font-size: clamp(17px, 2vw, 20px); color: var(--ink-2); max-width: 620px; margin: 0 0 28px; }
   .btns { display: flex; flex-wrap: wrap; gap: 10px; }
   .btn {
@@ -133,7 +134,7 @@
 
   .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-top: 168px; position: relative; }
   .stat { background: var(--card); padding: 20px 22px; }
-  .stat b { display: block; font-size: 28px; letter-spacing: -.02em; font-weight: 700; }
+  .stat b { display: block; font-family: var(--display); font-size: 30px; letter-spacing: -.02em; font-weight: 700; }
   .stat span { font-size: 14px; color: var(--ink-3); }
   a.stat { text-decoration: none; transition: background .15s; }
   a.stat:hover { background: var(--bg-alt); }
@@ -142,25 +143,22 @@
   /* ---------- Sections ---------- */
   section.block { padding: 88px 0; }
   section.alt { background: var(--bg-alt); }
-  .sec-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 36px; flex-wrap: wrap; }
-  .sec-num { font-family: var(--mono); font-size: 13px; color: var(--accent-ink); }
-  h2 { font-size: clamp(30px, 4vw, 42px); letter-spacing: -.025em; line-height: 1.1; margin: 6px 0 0; font-weight: 750; }
-  .sec-head p { color: var(--ink-2); max-width: 460px; margin: 0; }
-  h3 { margin: 0; font-size: 18px; letter-spacing: -.01em; }
+  .sec-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 40px; flex-wrap: wrap; }
+  h2 { font-family: var(--display); font-size: clamp(32px, 4.4vw, 48px); letter-spacing: -.025em; line-height: 1.05; margin: 0; font-weight: 700; }
+  .sec-head p { color: var(--ink-2); max-width: 440px; margin: 0; font-size: 17px; }
+  h3 { font-family: var(--display); margin: 0; font-size: 20px; letter-spacing: -.01em; font-weight: 700; }
   h1, h2, h3 { text-wrap: balance; }
 
-  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; }
-  .about-grid p { color: var(--ink-2); margin: 0 0 16px; font-size: 17px; }
+  .about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.55fr); gap: 56px; align-items: start; }
+  .about p { color: var(--ink-2); margin: 0 0 18px; font-size: 18px; }
+  .quote {
+    margin: 0; position: sticky; top: 96px; padding: 4px 0 4px 22px; border-left: 3px solid var(--accent);
+    font-family: var(--display); font-size: clamp(24px, 2.6vw, 32px); line-height: 1.2; letter-spacing: -.02em; font-weight: 500; color: var(--ink);
+  }
+  .quote cite { display: block; margin-top: 14px; font: 500 13px var(--mono); color: var(--ink-3); letter-spacing: 0; }
+  .cert { margin-top: 18px; font-size: 15px; color: var(--ink-3); }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .chip { font-size: 13px; padding: 6px 12px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); color: var(--ink-2); }
-  .side-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
-  .side-card h4 { margin: 0 0 12px; font-size: 13px; font-family: var(--mono); color: var(--ink-3); font-weight: 500; text-transform: uppercase; letter-spacing: .06em; }
-  .side-card + .side-card { margin-top: 16px; }
-  .edu { margin: 0; padding: 0; list-style: none; }
-  .edu li + li { margin-top: 14px; }
-  .edu b { display: block; font-weight: 600; }
-  .edu span { color: var(--ink-3); font-size: 14px; }
-
   /* Timeline */
   .timeline { position: relative; margin: 0; padding: 0; list-style: none; }
   .timeline::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
@@ -170,8 +168,18 @@
     content: ""; position: absolute; left: 0; top: 6px; width: 16px; height: 16px; border-radius: 50%;
     background: var(--bg); border: 3px solid var(--accent);
   }
-  .org-head { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; align-items: baseline; }
-  .org-head h3 { font-size: 21px; }
+  .org-head { display: flex; justify-content: space-between; gap: 4px 16px; flex-wrap: wrap; align-items: baseline; }
+  .org-head h3 { font-size: 22px; }
+  .org-sub { flex-basis: 100%; font-size: 14px; color: var(--ink-3); }
+  @media (min-width: 901px) {
+    .org { display: grid; grid-template-columns: 250px minmax(0, 1fr); column-gap: 40px; align-items: start; }
+    .org + .org { margin-top: 40px; }
+    .org-head { flex-direction: column; flex-wrap: nowrap; align-items: flex-start; gap: 6px; position: sticky; top: 92px; }
+    .org-head .when { order: -1; }
+    .org-sub { flex-basis: auto; }
+    .org .roles { margin-top: 0; grid-column: 2; }
+    .org .more-btn { grid-column: 2; justify-self: start; }
+  }
   .when { font-family: var(--mono); font-size: 13px; color: var(--ink-3); white-space: nowrap; }
   .roles { margin: 14px 0 0; padding: 0; list-style: none; background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
   .role { padding: 14px 18px; }
@@ -180,24 +188,24 @@
   .more-btn { display: none; }
   .js .more-btn {
     display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 6px 2px; border: 0; background: none; cursor: pointer;
-    font: 500 13px var(--mono); color: var(--accent-ink);
+    font: 600 14px Inter, sans-serif; color: var(--accent-ink);
   }
   .more-btn::after { content: ""; width: 7px; height: 7px; border-right: 1.6px solid currentColor; border-bottom: 1.6px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .2s; }
   .open > .more-btn::after { transform: translateY(1px) rotate(-135deg); }
   .more-btn:hover { text-decoration: underline; text-underline-offset: 3px; }
   .role-top { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
   .role-top b { font-weight: 600; }
-  .role p { margin: 6px 0 0; color: var(--ink-2); font-size: 15px; }
-  .role ul { margin: 8px 0 0; padding-left: 18px; color: var(--ink-2); font-size: 15px; }
+  .role p { margin: 6px 0 0; color: var(--ink-2); font-size: 16px; }
+  .role ul { margin: 8px 0 0; padding-left: 18px; color: var(--ink-2); font-size: 16px; }
   .loc { color: var(--ink-3); font-size: 14px; }
 
   /* Research */
   .r-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .r-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
   .r-card h3 { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-  .r-card h3 .n { font-family: var(--mono); font-size: 12px; color: var(--accent-ink); background: var(--accent-soft); padding: 2px 8px; border-radius: 999px; }
+  .r-card h3 .n { font-family: var(--display); font-size: 13px; color: var(--accent-ink); background: var(--accent-soft); padding: 2px 8px; border-radius: 999px; }
   .r-list { margin: 0; padding: 0; list-style: none; counter-reset: r; }
-  .r-list li { counter-increment: r; position: relative; padding: 10px 0 10px 34px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 15px; }
+  .r-list li { counter-increment: r; position: relative; padding: 10px 0 10px 34px; border-top: 1px solid var(--line); color: var(--ink-2); font-size: 16px; }
   .r-list li:first-child { border-top: 0; }
   .r-list li::before { content: counter(r, decimal-leading-zero); position: absolute; left: 0; top: 11px; font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
   .r-card.wide { grid-column: 1 / -1; }
@@ -205,14 +213,14 @@
   .r-list a.pat:hover { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 3px; }
   .pno { display: block; font-family: var(--mono); font-size: 12px; color: var(--ink-3); margin-top: 3px; }
   .honors { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
-  .honor { border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; font-size: 15px; color: var(--ink-2); background: var(--bg); }
+  .honor { border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; font-size: 16px; color: var(--ink-2); background: var(--bg); }
   .honor b { display: block; color: var(--ink); font-weight: 600; margin-bottom: 2px; }
   .scholar-row { margin-top: 20px; }
   .featured { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
   .feat { border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; background: var(--bg); display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden; }
   .feat::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(var(--accent), var(--accent-2)); }
-  .feat b { font-size: 19px; letter-spacing: -.01em; }
-  .feat p { margin: 0; color: var(--ink-2); font-size: 15px; }
+  .feat b { font-family: var(--display); font-size: 20px; letter-spacing: -.01em; }
+  .feat p { margin: 0; color: var(--ink-2); font-size: 16px; }
   .book { display: block; margin-top: 6px; padding: 12px 14px; border-radius: 10px; background: var(--card); border: 1px solid var(--line); text-decoration: none; transition: border-color .15s; }
   .book:hover { border-color: var(--accent); }
   .book i { display: block; color: var(--ink); font-size: 15px; }
@@ -221,7 +229,14 @@
 
   /* Project cards */
   .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-  .cards.two { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+  .cards.games { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .games .body { padding: 14px 16px 16px; gap: 4px; }
+  .games h3 { font-size: 17px; }
+  .games .body p { font-size: 14.5px; line-height: 1.45; }
+  .games .go { font-size: 13.5px; margin-top: 6px; }
+  .games .tag { font-size: 10.5px; }
+  .swipe-hint { display: none; margin: 0 0 12px; font-size: 14px; color: var(--ink-3); }
+  @media (max-width: 1000px) { .cards.games { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
   .card {
     display: flex; flex-direction: column; text-decoration: none; background: var(--card); border: 1px solid var(--line);
     border-radius: var(--radius); overflow: hidden; transition: transform .2s, box-shadow .2s, border-color .2s;
@@ -235,12 +250,29 @@
   .thumb.bloom { background: linear-gradient(135deg, #ffe3e8, #ffd1b8); }
   .thumb.ezdraw { background: radial-gradient(circle, rgba(0,0,0,.18) 1.2px, transparent 1.4px) 0 0 / 18px 18px, #fbfbfa; }
   .body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
-  .tag { font-family: var(--mono); font-size: 12px; color: var(--accent-ink); }
-  .body p { margin: 0; color: var(--ink-2); font-size: 15px; flex: 1; }
+  .tag { font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .09em; color: var(--accent-ink); }
+  .body p { margin: 0; color: var(--ink-2); font-size: 16px; flex: 1; }
   .go { font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; }
   .go::after { content: "→"; transition: transform .2s; }
   .card:hover .go::after { transform: translateX(3px); }
 
+  .sw-feature {
+    display: grid; grid-template-columns: 1.5fr 1fr; text-decoration: none; background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius); overflow: hidden; transition: transform .2s, box-shadow .2s, border-color .2s;
+  }
+  .sw-feature:hover, .sw-row:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--ink-3); }
+  .sw-shot { background: #0f1117; min-height: 320px; }
+  .sw-shot img { width: 100%; height: 100%; object-fit: cover; object-position: left top; }
+  .sw-txt { padding: 36px; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+  .sw-txt h3 { font-size: 30px; }
+  .sw-txt p, .sw-row p { margin: 0; color: var(--ink-2); font-size: 16px; }
+  .sw-row {
+    margin-top: 20px; display: grid; grid-template-columns: 88px minmax(0, 1fr) auto; gap: 24px; align-items: center; text-decoration: none;
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 26px; transition: transform .2s, box-shadow .2s, border-color .2s;
+  }
+  .sw-row img { width: 88px; height: 88px; border-radius: 22%; box-shadow: 0 8px 22px rgba(0,0,0,.15); }
+  .sw-row h3 { margin: 4px 0 6px; }
+  .sw-row:hover .go::after, .sw-feature:hover .go::after { transform: translateX(3px); }
   .photo-feature {
     display: grid; grid-template-columns: 1.3fr 1fr; text-decoration: none; background: #141414; color: #f4efe6;
     border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); transition: transform .2s, box-shadow .2s;
@@ -261,7 +293,14 @@
   .contact p { color: var(--ink-2); max-width: 560px; margin: 0 auto 28px; font-size: 17px; }
   .contact .btns { justify-content: center; }
   footer { padding: 32px 0 48px; color: var(--ink-3); font-size: 14px; }
-  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 24px; }
+  footer .wrap { display: grid; grid-template-columns: 1fr auto; gap: 14px 32px; border-top: 1px solid var(--line); padding-top: 28px; align-items: center; }
+  .f-id b { font-family: var(--display); color: var(--ink); font-size: 18px; margin-right: 12px; }
+  .f-id b span { color: var(--accent); }
+  .f-links { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+  .f-links a { text-decoration: none; color: var(--ink-2); }
+  .f-links a:hover { color: var(--accent-ink); }
+  .f-copy { grid-column: 1 / -1; font-size: 13px; }
+  @media (max-width: 640px) { footer .wrap { grid-template-columns: 1fr; } .f-id b { display: block; margin-bottom: 2px; } }
 
   /* Reveal on scroll */
   .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
@@ -272,7 +311,9 @@
   @media (max-width: 900px) {
     .hero .wrap { grid-template-columns: 1fr; }
     .portrait { width: 140px; height: 140px; order: -1; border-width: 4px; }
-    .about-grid, .r-grid, .photo-feature { grid-template-columns: 1fr; }
+    .about, .r-grid, .photo-feature, .sw-feature { grid-template-columns: 1fr; }
+    .about { gap: 28px; }
+    .quote { position: static; }
     .stats { grid-template-columns: repeat(2, 1fr); }
     .photo-feature .txt { padding: 28px; }
   }
@@ -289,7 +330,22 @@
     .nav nav a { font-size: 17px; padding: 12px 14px; border-radius: 10px; }
     .hero { padding: 32px 0 8px; }
     section.block { padding: 64px 0; }
-    .cards, .cards.two { grid-template-columns: 1fr; }
+    .cards { grid-template-columns: 1fr; }
+    .cards.games {
+      display: grid; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 72%; gap: 12px;
+      overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 -16px; padding: 4px 16px 14px; scroll-padding: 0 16px;
+      scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    }
+    .cards.games::-webkit-scrollbar { display: none; }
+    .cards.games .card { scroll-snap-align: start; }
+    .cards.games .card.reveal { opacity: 1; transform: none; }
+    .swipe-hint { display: block; }
+    .sw-txt { padding: 24px; }
+    .sw-txt h3 { font-size: 24px; }
+    .sw-shot { min-height: 0; aspect-ratio: 16 / 10; }
+    .sw-row { grid-template-columns: 64px minmax(0, 1fr); gap: 16px; padding: 18px; }
+    .sw-row img { width: 64px; height: 64px; }
+    .sw-row .go { grid-column: 1 / -1; }
     .org { padding-left: 30px; }
     .role-top { flex-direction: column; gap: 2px; }
     .r-card { padding: 20px; }
@@ -353,34 +409,20 @@
   <section class="block alt" id="about">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div><div class="sec-num">01 / About</div><h2>Where power electronics<br class="lg"> meets plasma physics</h2></div>
+        <div><h2>Where power electronics<br class="lg"> meets plasma physics</h2></div>
       </div>
-      <div class="about-grid">
+      <div class="about">
+        <blockquote class="quote reveal">I trust a design once I can simulate it.<cite>— why I wrote Xcircuitsim</cite></blockquote>
         <div class="reveal">
           <p>At Lam Research I develop RF technology for next-generation etch equipment. Much of my recent work is about shaping the voltage at the wafer: controlling ion energy with pulsed, non-sinusoidal waveforms, and recovering energy that would otherwise be lost. Most of my patent filings are in this area.</p>
           <p>I came to plasma from power electronics. I started at DRDO in 2009, designing high-voltage converters and modulators for microwave transmitters. My PhD at NUS, on converters for more-electric aircraft, was published by Springer as an outstanding thesis. I then designed RF generators and matching networks at Advanced Energy while teaching power electronics at NUS, and joined Lam in 2022, working in Singapore, California and now Bengaluru.</p>
-          <p>I trust a design once I can simulate it, which is why I ended up writing my own circuit simulator, Xcircuitsim. The games are for my son, who is four and a half. I build each one around what he needs and what he is curious about at the time.</p>
+          <p>That habit of simulating first is why I ended up writing my own circuit simulator, Xcircuitsim. The games are for my son, who is four and a half. I build each one around what he needs and what he is curious about at the time.</p>
           <div class="chips">
             <span class="chip">RF generators</span><span class="chip">Impedance matching</span><span class="chip">Resonant converters</span>
             <span class="chip">HV / HF magnetics</span><span class="chip">Ion energy control</span><span class="chip">Plasma sources</span>
             <span class="chip">Circuit simulation</span><span class="chip">Analog &amp; digital control</span><span class="chip">Python</span>
           </div>
-        </div>
-        <div class="reveal">
-          <div class="side-card">
-            <h4>Education</h4>
-            <ul class="edu">
-              <li><b>PhD, Electrical &amp; Computer Engineering</b><span>National University of Singapore · 2013–2017</span></li>
-              <li><b>B.Tech, Electrical Engineering</b><span>IIT (BHU) Varanasi</span></li>
-            </ul>
-          </div>
-          <div class="side-card">
-            <h4>Certification</h4>
-            <ul class="edu">
-              <li><b>Magnetics for Power Electronic Converters</b></li>
-            </ul>
-          </div>
-          
+          <div class="cert">Certification: Magnetics for Power Electronic Converters</div>
         </div>
       </div>
     </div>
@@ -390,12 +432,12 @@
   <section class="block" id="career">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div><div class="sec-num">02 / Career</div><h2>Experience</h2></div>
+        <div><h2>Experience</h2></div>
         <p>From defence microwave transmitters to the RF systems inside today's most advanced etch tools.</p>
       </div>
       <ol class="timeline">
         <li class="org reveal" data-expand>
-          <div class="org-head"><h3>Lam Research</h3><span class="when">2022 — present</span></div>
+          <div class="org-head"><h3>Lam Research</h3><span class="when">2022 — present</span><span class="org-sub">Bengaluru · Fremont · Singapore</span></div>
           <ul class="roles">
             <li class="role">
               <div class="role-top"><b>Senior Member of Technical Staff, RF Engineering</b><span class="when">Mar 2025 — present</span></div>
@@ -421,7 +463,7 @@
           <button class="more-btn" type="button" aria-expanded="false" data-more="Show details" data-less="Hide details">Show details</button>
         </li>
         <li class="org reveal" data-expand>
-          <div class="org-head"><h3>Advanced Energy</h3><span class="when">2018 — 2021</span></div>
+          <div class="org-head"><h3>Advanced Energy</h3><span class="when">2018 — 2021</span><span class="org-sub">Singapore</span></div>
           <ul class="roles">
             <li class="role">
               <div class="role-top"><b>Electrical Engineer III</b><span class="when">Jul 2018 — Dec 2021</span></div>
@@ -439,7 +481,7 @@
           <button class="more-btn" type="button" aria-expanded="false" data-more="Show details" data-less="Hide details">Show details</button>
         </li>
         <li class="org reveal" data-expand>
-          <div class="org-head"><h3>National University of Singapore</h3><span class="when">2013 — 2021</span></div>
+          <div class="org-head"><h3>National University of Singapore</h3><span class="when">2013 — 2021</span><span class="org-sub">PhD, research and teaching</span></div>
           <ul class="roles">
             <li class="role">
               <div class="role-top"><b>Adjunct Assistant Professor</b><span class="when">Jul 2020 — Nov 2021</span></div>
@@ -453,14 +495,14 @@
               <div class="more"><p>Bidirectional isolated three-phase AC-DC converter interfacing the utility grid with energy storage. Funded by the Energy Market Authority of Singapore, with Rolls-Royce Singapore as industrial collaborator.</p></div>
             </li>
             <li class="role">
-              <div class="role-top"><b>Research Scholar (PhD)</b><span class="when">Jul 2013 — Apr 2017</span></div>
-              <div class="more"><p>Thesis: Analysis and design of power converter topologies for future more-electric aircraft. Recognised with the Springer Theses Award 2017 for outstanding PhD research.</p></div>
+              <div class="role-top"><b>PhD, Electrical &amp; Computer Engineering</b><span class="when">Jul 2013 — Apr 2017</span></div>
+              <div class="more"><p>Research scholar. Thesis: Analysis and design of power converter topologies for future more-electric aircraft. Recognised with the Springer Theses Award 2017 for outstanding PhD research.</p></div>
             </li>
           </ul>
           <button class="more-btn" type="button" aria-expanded="false" data-more="Show details" data-less="Hide details">Show details</button>
         </li>
         <li class="org reveal" data-expand>
-          <div class="org-head"><h3>DRDO, Ministry of Defence, India</h3><span class="when">2009 — 2013</span></div>
+          <div class="org-head"><h3>DRDO</h3><span class="when">2009 — 2013</span><span class="org-sub">Ministry of Defence, India</span></div>
           <ul class="roles">
             <li class="role">
               <div class="role-top"><b>Scientist B</b><span class="when">Dec 2009 — Jul 2013</span></div>
@@ -476,6 +518,12 @@
           </ul>
           <button class="more-btn" type="button" aria-expanded="false" data-more="Show details" data-less="Hide details">Show details</button>
         </li>
+        <li class="org reveal">
+          <div class="org-head"><h3>IIT (BHU) Varanasi</h3><span class="when">Education</span><span class="org-sub">Indian Institute of Technology</span></div>
+          <ul class="roles">
+            <li class="role"><div class="role-top"><b>B.Tech, Electrical Engineering</b></div></li>
+          </ul>
+        </li>
       </ol>
     </div>
   </section>
@@ -484,7 +532,7 @@
   <section class="block alt" id="research">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div><div class="sec-num">03 / Research</div><h2>Patents, papers &amp; honours</h2></div>
+        <div><h2>Patents, papers &amp; honours</h2></div>
         <p>Selected work. The full list of publications and citations is on Google Scholar.</p>
       </div>
       <div class="r-grid">
@@ -545,29 +593,27 @@
   <section class="block" id="software">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div><div class="sec-num">04 / Software</div><h2>Things I've built</h2></div>
+        <div><h2>Things I've built</h2></div>
         <p>Tools I wanted to exist, built in my own time.</p>
       </div>
-      <div class="cards two">
-        <a class="card reveal" href="https://amitrishu-del.github.io/xcircuitsim/" target="_blank" rel="noopener">
-          <div class="thumb"><img src="assets/shot-xcircuitsim.jpg" alt="Xcircuitsim schematic editor and waveform viewer" loading="lazy"></div>
-          <div class="body">
-            <span class="tag">macOS · Python · beta</span>
-            <h3>Xcircuitsim</h3>
-            <p>A circuit simulator for power and RF engineers: draw a schematic, then run DC, transient, AC / Bode, parameter sweeps and FFT. Imports SPICE netlists and libraries, with an interactive Smith chart.</p>
-            <span class="go">Visit the site &amp; join the beta</span>
-          </div>
-        </a>
-        <a class="card reveal" href="https://amitrishu-del.github.io/bloom/" target="_blank" rel="noopener">
-          <div class="thumb icon bloom"><img src="assets/bloom-icon.jpg" alt="Bloom Pomodoro app icon" loading="lazy"></div>
-          <div class="body">
-            <span class="tag">iPhone · App Store</span>
-            <h3>Bloom Pomodoro</h3>
-            <p>A calm focus timer where every finished session grows a flower. Bloom Pro adds a garden, more flowers and guided breathing with Apple Health.</p>
-            <span class="go">Learn more</span>
-          </div>
-        </a>
-      </div>
+      <a class="sw-feature reveal" href="https://amitrishu-del.github.io/xcircuitsim/" target="_blank" rel="noopener">
+        <div class="sw-shot"><img src="assets/shot-xcircuitsim.jpg" alt="Xcircuitsim schematic editor and waveform viewer" loading="lazy"></div>
+        <div class="sw-txt">
+          <span class="tag">macOS · Python · beta</span>
+          <h3>Xcircuitsim</h3>
+          <p>A circuit simulator for power and RF engineers. Draw a schematic, then run DC, transient, AC / Bode, parameter sweeps and FFT. It imports SPICE netlists and libraries, and has an interactive Smith chart.</p>
+          <span class="go">Visit the site &amp; join the beta</span>
+        </div>
+      </a>
+      <a class="sw-row reveal" href="https://amitrishu-del.github.io/bloom/" target="_blank" rel="noopener">
+        <img src="assets/bloom-icon.jpg" alt="Bloom Pomodoro app icon" loading="lazy">
+        <div>
+          <span class="tag">iPhone · App Store</span>
+          <h3>Bloom Pomodoro</h3>
+          <p>A calm focus timer where every finished session grows a flower. Bloom Pro adds a garden, more flowers and guided breathing with Apple Health.</p>
+        </div>
+        <span class="go">Learn more</span>
+      </a>
     </div>
   </section>
 
@@ -575,41 +621,42 @@
   <section class="block alt" id="games">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div><div class="sec-num">05 / Games &amp; toys</div><h2>Made for my son</h2></div>
+        <div><h2>Made for my son</h2></div>
         <p>Small web games and toys that run in any browser, on a phone, tablet or computer. No install needed.</p>
       </div>
-      <div class="cards">
+      <div class="swipe-hint">Swipe to see all 8 →</div>
+      <div class="cards games">
         <a class="card reveal" href="https://amitrishu-del.github.io/plasma-glow/" target="_blank" rel="noopener">
           <div class="thumb"><img src="assets/shot-plasma-glow.jpg" alt="Plasma Glow: a glowing plasma globe with an oscilloscope" loading="lazy"></div>
-          <div class="body"><span class="tag">Toy · physics</span><h3>Plasma Glow</h3><p>A plasma globe you can touch. Change the voltage and the gas, and watch the voltage and current on a little oscilloscope.</p><span class="go">Play</span></div>
+          <div class="body"><span class="tag">Toy · physics</span><h3>Plasma Glow</h3><p>A plasma globe you can touch, with its own little oscilloscope.</p><span class="go">Play</span></div>
         </a>
         <a class="card reveal" href="https://amitrishu-del.github.io/flag-globe/" target="_blank" rel="noopener">
           <div class="thumb"><img src="assets/shot-flag-globe.jpg" alt="Anant's Flag Globe: a spinning world map" loading="lazy"></div>
-          <div class="body"><span class="tag">Game · geography</span><h3>Anant's Flag Globe</h3><p>Spin the globe, tap a country and collect its flag. All 242 of them.</p><span class="go">Play</span></div>
+          <div class="body"><span class="tag">Game · geography</span><h3>Anant's Flag Globe</h3><p>Spin the globe and collect all 242 flags.</p><span class="go">Play</span></div>
         </a>
         <a class="card reveal" href="https://amitrishu-del.github.io/yes-or-no/" target="_blank" rel="noopener">
           <div class="thumb"><img src="assets/shot-yes-or-no.jpg" alt="Yes or No? game menu" loading="lazy"></div>
-          <div class="body"><span class="tag">Game · for little ones</span><h3>Yes or No?</h3><p>A picture quiz for young children: animals, food, vehicles, colours, shapes, space, flags and feelings.</p><span class="go">Play</span></div>
+          <div class="body"><span class="tag">Game · for little ones</span><h3>Yes or No?</h3><p>A picture quiz: animals, food, colours, space and more.</p><span class="go">Play</span></div>
         </a>
         <a class="card reveal" href="https://amitrishu-del.github.io/easyform/" target="_blank" rel="noopener">
           <div class="thumb icon ezdraw"><img src="assets/ezdraw-icon.png" alt="EzDraw app icon" loading="lazy"></div>
-          <div class="body"><span class="tag">App · iPad</span><h3>EzDraw</h3><p>A light, fast drawing board for Apple Pencil, built because the big drawing apps were too heavy for an older iPad.</p><span class="go">Open</span></div>
+          <div class="body"><span class="tag">App · iPad</span><h3>EzDraw</h3><p>A light, fast drawing board for Apple Pencil.</p><span class="go">Open</span></div>
         </a>
         <a class="card reveal" href="https://solar-system-explorer-amit.netlify.app/" target="_blank" rel="noopener">
           <div class="thumb"><img src="assets/shot-solar-system.jpg" alt="Solar System Explorer: planets orbiting the Sun" loading="lazy"></div>
-          <div class="body"><span class="tag">Explore · space</span><h3>Solar System Explorer</h3><p>Watch the planets circle the Sun, then tap any planet to hear fun facts about it.</p><span class="go">Play</span></div>
+          <div class="body"><span class="tag">Explore · space</span><h3>Solar System Explorer</h3><p>Tap a planet to hear fun facts about it.</p><span class="go">Play</span></div>
         </a>
         <a class="card reveal" href="https://animal-explorer2-amit.netlify.app/" target="_blank" rel="noopener">
           <div class="thumb"><img src="assets/shot-animal-explorer.jpg" alt="Animal Explorer: a grid of illustrated animals" loading="lazy"></div>
-          <div class="body"><span class="tag">Explore · animals</span><h3>Animal Explorer</h3><p>Tap a dog, a cow, a lion or an owl to meet the animal and hear all about it.</p><span class="go">Play</span></div>
+          <div class="body"><span class="tag">Explore · animals</span><h3>Animal Explorer</h3><p>Tap an animal to meet it and hear all about it.</p><span class="go">Play</span></div>
         </a>
         <a class="card reveal" href="https://amitrishu-del.github.io/word-garden/" target="_blank" rel="noopener">
           <div class="thumb"><img src="assets/shot-word-garden.jpg" alt="Word Garden: levels of reading words" loading="lazy"></div>
-          <div class="body"><span class="tag">Learn · reading</span><h3>Word Garden</h3><p>Early reading, one level at a time. Every word learned plants a flower in the garden.</p><span class="go">Play</span></div>
+          <div class="body"><span class="tag">Learn · reading</span><h3>Word Garden</h3><p>Early reading: every word learned plants a flower.</p><span class="go">Play</span></div>
         </a>
         <a class="card reveal" href="https://ghost-eating-candy.netlify.app/" target="_blank" rel="noopener">
           <div class="thumb"><img src="assets/shot-ghost-candy.jpg" alt="Ghost Eats Candy: a picture puzzle" loading="lazy"></div>
-          <div class="body"><span class="tag">Puzzle</span><h3>Ghost Eats Candy</h3><p>Drag the pieces to finish the picture of a hungry little ghost. Pick 4, 6 or 9 pieces.</p><span class="go">Play</span></div>
+          <div class="body"><span class="tag">Puzzle</span><h3>Ghost Eats Candy</h3><p>A 4, 6 or 9 piece picture puzzle.</p><span class="go">Play</span></div>
         </a>
       </div>
     </div>
@@ -619,7 +666,7 @@
   <section class="block" id="photography">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div><div class="sec-num">06 / Photography</div><h2>A camera comes everywhere</h2></div>
+        <div><h2>A camera comes everywhere</h2></div>
         <p>Photographs from trips and slow days, shot on a Canon EOS R6 Mark II.</p>
       </div>
       <a class="photo-feature reveal" href="https://lenseandsensibility.com" target="_blank" rel="noopener">
@@ -641,7 +688,6 @@
   <!-- Contact -->
   <section class="block alt contact" id="contact">
     <div class="wrap reveal">
-      <div class="sec-num">07 / Contact</div>
       <h2>Let's talk</h2>
       <p>Working on RF power, plasma sources or power electronics? Interested in trying Xcircuitsim? I'd be glad to hear from you.</p>
       <div class="btns">
@@ -658,8 +704,15 @@
 
 <footer>
   <div class="wrap">
-    <span>© <span id="yr">2026</span> Amit Singh</span>
-    <span>Bengaluru, India</span>
+    <div class="f-id"><b>Amit Singh<span>.</span></b><span>RF power electronics · Bengaluru, India</span></div>
+    <nav class="f-links" aria-label="Elsewhere">
+      <a href="mailto:amit00971x@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/amitksinghnus/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://scholar.google.com.sg/citations?user=wc_4waUAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+      <a href="https://github.com/amitrishu-del" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://lenseandsensibility.com" target="_blank" rel="noopener">Photography</a>
+    </nav>
+    <div class="f-copy">© <span id="yr">2026</span> Amit Singh</div>
   </div>
 </footer>
 
